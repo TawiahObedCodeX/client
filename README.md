@@ -1,153 +1,256 @@
-FDA Regulation Management System (FRMS)
 
-A modern full-stack regulatory management platform inspired by digital transformation initiatives within Ghana’s regulatory ecosystem.
 
-Built with scalability, security, and workflow efficiency in mind, the FDA Regulation Management System (FRMS) is designed to modernize product registration and regulatory processes through a secure web-based infrastructure.
+<!-- 3D Animated Header -->
+<h1 align="center">
+ ⚡ FDA Ghana Regulation Management System (FRMS)
+</h1>
 
-⸻
+<h3 align="center">
+ Enterprise Government Regulation Platform • Digital Transformation • RegTech Infrastructure
+</h3>
 
-Project Overview
+<div align="center">
 
-Traditional regulatory workflows often depend heavily on paperwork, manual verification, and physical office processes. These systems can introduce delays, limited application visibility, and administrative inefficiencies.
+<img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=30&duration=3000&pause=1000&color=00F7FF&center=true&vCenter=true&width=1000&lines=FDA+Ghana+Regulation+Management+System;Enterprise+Regulatory+Technology+(RegTech);Secure+Workflow+Automation;Government+Digital+Transformation;Built+With+Next.js+%26+TypeScript;Scalable+Cloud+Infrastructure+🚀" />
 
-FRMS is a proposed enterprise-grade platform focused on improving how regulatory applications are submitted, processed, reviewed, and monitored through digital workflows.
+</div>
 
-This project is currently being developed in phases, starting with the client-facing registration portal.
+---
 
-⸻
+# 🏛️ About The Project
 
-Current Development Phase
+The **FDA Ghana Regulation Management System (FRMS)** is a modern enterprise-grade regulatory platform designed to digitize and automate the regulatory workflows of the Food and Drugs Authority (FDA) Ghana.
 
-Phase 1 — Integrated Registration Portal
+The platform transforms traditional paper-based product registration and approval systems into a secure, scalable, transparent, and high-performance digital ecosystem.
 
-The first release focuses on creating a secure and user-friendly registration experience for businesses and applicants.
+FRMS enables manufacturers, importers, and FDA officers to manage regulatory processes efficiently through modern web technologies, workflow automation, cloud infrastructure, and secure document management systems.
 
-Planned Features
-	•	Secure product registration portal
-	•	Multi-step guided application workflow
-	•	Real-time application tracking dashboard
-	•	Secure document upload system
-	•	Responsive and accessible user interface
-	•	Authentication and role-based access preparation
-	•	Cloud-ready architecture
+The project focuses on:
 
-⸻
+- ⚡ Digital Transformation
+- 🔐 Enterprise Security
+- 📑 Regulatory Workflow Automation
+- ☁️ Cloud Infrastructure
+- 📊 Transparency & Monitoring
+- 🧠 Smart Compliance Systems
+- 🏛️ Government Technology Innovation (GovTech)
+- 🧬 Regulatory Technology (RegTech)
 
-Full Project Roadmap
+---
 
-1. Integrated Registration Portal
+# 🌍 The Vision Behind FRMS
 
-A digital portal for online product registration and application submission.
+Historically, many regulatory processes relied heavily on manual paperwork, physical office visits, and disconnected systems. This created:
 
-2. Departmental Workflow Engine
+- Delays in approvals
+- Administrative bottlenecks
+- Poor application visibility
+- Heavy documentation burdens
+- Difficult compliance tracking
 
-An internal workflow system for managing approvals and application routing.
+FRMS solves these challenges by introducing a centralized digital regulation platform where:
 
-3. Compliance & Timeline Monitoring
+✅ Applications are submitted online  
+✅ Reviews move through automated workflows  
+✅ Documents are securely stored in the cloud  
+✅ QR verification prevents fraud  
+✅ Regulatory timelines are monitored automatically  
+✅ Public product verification increases transparency  
 
-A tracking engine for monitoring review timelines, notifications, and processing states.
+This project represents a real-world enterprise software solution designed for national-scale regulatory operations.
 
-4. Verification & QR Validation System
+---
 
-A public verification system for validating approved products and generated certificates.
+# 🧠 Enterprise-Level Features
 
-⸻
+---
 
-Technology Stack
+## 🔹 Integrated Registration Portal
 
-Frontend
-	•	Next.js
-	•	React
-	•	TypeScript
-	•	Tailwind CSS
+A secure online registration portal that allows businesses to submit applications digitally.
 
-Backend
-	•	Node.js
-	•	REST API Architecture
-	•	Authentication & Authorization
+### Features:
+- Multi-step registration workflow
+- Drag-and-drop document uploads
+- Product registration dashboard
+- Real-time application tracking
+- Smart form persistence
+- Responsive mobile-friendly UI
 
-Database & Storage
-	•	PostgreSQL
-	•	Cloud File Storage Integration
+---
 
-DevOps & Deployment
-	•	GitHub
-	•	Vercel
-	•	Cloud Infrastructure Services
+## 🔹 Departmental Workflow Engine
 
-⸻
+An internal enterprise workflow system for FDA staff and departments.
 
-Software Architecture Goals
+### Features:
+- Role-based approval routing
+- Department assignment logic
+- Scientific review workflows
+- Internal review notes
+- Approval escalation pipeline
+- Officer activity monitoring
 
-This project is being designed with enterprise-level principles including:
-	•	Scalable full-stack architecture
-	•	Secure authentication workflows
-	•	Modular code structure
-	•	API-driven communication
-	•	Role-based access management
-	•	Secure file handling
-	•	Maintainable and reusable components
+---
 
-⸻
+## 🔹 Statutory Timeline Tracker
 
-Security Considerations
+A compliance-aware monitoring engine designed for regulatory deadlines.
 
-The platform is being developed with security and regulatory integrity in mind.
+### Features:
+- SLA tracking system
+- Automated overdue alerts
+- Escalation notifications
+- Clock-stop logic
+- Compliance monitoring dashboard
 
-Key considerations include:
-	•	Protected document handling
-	•	Secure authentication flows
-	•	Role-based permissions
-	•	Data validation and sanitization
-	•	Audit-aware workflow design
+---
 
-Sensitive implementation details and internal regulatory logic are intentionally excluded from the public repository.
+## 🔹 Secure Verification & QR Issuance
 
-⸻
+A public-facing product verification infrastructure.
 
-Project Status
+### Features:
+- Automated PDF certificate generation
+- QR code verification system
+- Public verification registry
+- Authenticity validation
+- Immutable approved records
 
-Current Status:
-	•	Research & system architecture completed
-	•	Frontend planning completed
-	•	Repository structure initialization in progress
-	•	Phase 1 development ongoing
+---
 
-Future updates and development progress will be shared as the project evolves.
+# 🔐 Enterprise Security Architecture
 
-⸻
+FRMS implements modern enterprise-grade security practices:
 
-Development Vision
+| Security Feature | Description |
+|---|---|
+| AES-256 Encryption | Protects sensitive data |
+| RBAC | Role-Based Access Control |
+| Immutable Records | Prevents unauthorized modifications |
+| Secure File Uploads | Cloud-secured document storage |
+| Audit Logs | Tracks regulatory actions |
+| Protected Routes | Authenticated access control |
+| Secure APIs | Backend validation & authorization |
 
-The goal of FRMS is to explore how modern software engineering can contribute to:
-	•	Digital transformation
-	•	Regulatory technology (RegTech)
-	•	Workflow automation
-	•	Public-sector efficiency
-	•	User-centered government systems
+---
 
-This project also serves as a practical enterprise software engineering case study focused on scalable full-stack development.
+# ☁️ Cloud Infrastructure
 
-⸻
+The system is designed for scalability and production deployment.
 
-Repository Goals
+### Infrastructure:
+- AWS S3 Cloud Storage
+- PostgreSQL Database
+- Prisma ORM
+- Secure API Layer
+- Optimized File Handling
+- Cloud Deployment Pipelines
 
-This repository is intended to demonstrate:
-	•	Full-stack application architecture
-	•	Enterprise workflow design
-	•	Frontend engineering with Next.js
-	•	Backend system planning
-	•	Secure application structure
-	•	Real-world software problem solving
+---
 
-⸻
+# ⚙️ Tech Stack
 
-Author
+<p align="center">
 
-Developed by Tawiah Obed
+<!-- Frontend -->
+<img src="https://skillicons.dev/icons?i=nextjs" height="65" alt="Next.js" />
+<img src="https://skillicons.dev/icons?i=react" height="65" alt="React" />
+<img src="https://skillicons.dev/icons?i=typescript" height="65" alt="TypeScript" />
+<img src="https://skillicons.dev/icons?i=tailwind" height="65" alt="TailwindCSS" />
+<img src="https://skillicons.dev/icons?i=javascript" height="65" alt="JavaScript" />
 
-Focus Areas:
-	•	Full-Stack Development
-	•	Enterprise Software Engineering
-	•	Government Digital Transformation
-	•	Regulatory Technology (RegTech)
+<!-- Backend -->
+<img src="https://skillicons.dev/icons?i=nodejs" height="65" alt="Node.js" />
+<img src="https://skillicons.dev/icons?i=express" height="65" alt="Express.js" />
+
+<!-- Database -->
+<img src="https://skillicons.dev/icons?i=postgres" height="65" alt="PostgreSQL" />
+<img src="https://skillicons.dev/icons?i=prisma" height="65" alt="Prisma" />
+
+<!-- Cloud -->
+<img src="https://skillicons.dev/icons?i=aws" height="65" alt="AWS" />
+<img src="https://skillicons.dev/icons?i=docker" height="65" alt="Docker" />
+<img src="https://skillicons.dev/icons?i=vercel" height="65" alt="Vercel" />
+
+<!-- Tools -->
+<img src="https://skillicons.dev/icons?i=git" height="65" alt="Git" />
+<img src="https://skillicons.dev/icons?i=github" height="65" alt="GitHub" />
+<img src="https://skillicons.dev/icons?i=vscode" height="65" alt="VS Code" />
+<img src="https://skillicons.dev/icons?i=figma" height="65" alt="Figma" />
+
+</p>
+
+---
+
+# 📂 Enterprise Project Structure
+
+```bash
+frms-fda-ghana/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/page.tsx
+│   │   └── register/page.tsx
+│   ├── (dashboard)/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── new-registration/
+│   │   │   └── page.tsx
+│   │   ├── applications/
+│   │   │   └── [id]/page.tsx
+│   │   ├── profile/page.tsx
+│   │   └── settings/page.tsx
+│   ├── layout.tsx
+│   ├── page.tsx
+│   └── globals.css
+│
+├── components/
+│   ├── layout/
+│   │   ├── Navbar.tsx
+│   │   ├── Sidebar.tsx
+│   │   └── Footer.tsx
+│   │
+│   ├── ui/
+│   │
+│   ├── dashboard/
+│   │   ├── DashboardCards.tsx
+│   │   ├── RecentApplicationsTable.tsx
+│   │   └── StatusTimeline.tsx
+│   │
+│   ├── forms/
+│   │   └── MultiStepRegistration.tsx
+│   │
+│   ├── upload/
+│   │   └── FileUpload.tsx
+│   │
+│   ├── common/
+│   │   ├── StatusBadge.tsx
+│   │   ├── Loader.tsx
+│   │   ├── Skeleton.tsx
+│   │   └── Toast.tsx
+│   │
+│   └── modals/
+│
+├── lib/
+│   ├── prisma.ts
+│   ├── utils.ts
+│   └── s3.ts
+│
+├── hooks/
+│   └── useFormPersist.ts
+│
+├── store/
+│   └── useAppStore.ts
+│
+├── types/
+│   └── index.ts
+│
+├── prisma/
+│   └── schema.prisma
+│
+├── public/
+│   └── logo.svg
+│
+├── styles/
+│
+└── package.json
