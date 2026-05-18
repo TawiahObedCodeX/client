@@ -1,3 +1,4 @@
+// app/dashboard/layout.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -18,7 +19,7 @@ export default function DashboardLayout({
     setIsLoading(true);
     setShowContent(false);
 
-    // Minimum loader display time = 1.4 seconds
+    // Minimum loader display time = 1.4 seconds (2026 Version)
     const timer = setTimeout(() => {
       setIsLoading(false);
       setShowContent(true);
@@ -36,7 +37,7 @@ export default function DashboardLayout({
 
         <main className="flex-1 overflow-auto relative p-6 lg:p-8">
           
-          {/* ==================== FULL PAGE LOADER ==================== */}
+          {/* ==================== FULL PAGE LOADER - 2026 VERSION ==================== */}
           {isLoading && (
             <div className="full-page-loader">
               <Loader size="large" />
