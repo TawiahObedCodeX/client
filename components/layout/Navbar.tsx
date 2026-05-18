@@ -24,6 +24,7 @@ export function Navbar() {
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="lg:hidden p-2 hover:bg-slate-100 rounded-xl"
+            aria-label="Toggle menu"
           >
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -41,13 +42,11 @@ export function Navbar() {
 
         {/* Right Side */}
         <div className="flex items-center gap-4">
-          {/* Notifications */}
           <Button variant="ghost" size="icon" className="relative">
             <Bell className="w-5 h-5" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white"></span>
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white" />
           </Button>
 
-          {/* User Profile Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div className="flex items-center gap-3 cursor-pointer hover:bg-slate-100 p-1 pr-3 rounded-2xl">
@@ -79,6 +78,14 @@ export function Navbar() {
           </DropdownMenu>
         </div>
       </div>
+
+      {/* Mobile Menu - Fixed */}
+      {mobileOpen && (
+        <div className="lg:hidden border-t bg-white px-6 py-4">
+          {/* Add your mobile nav items here */}
+          <p className="text-sm text-slate-500">Mobile navigation coming soon...</p>
+        </div>
+      )}
     </nav>
   );
 }

@@ -4,18 +4,20 @@
   --font-sans: 'Inter', system-ui, sans-serif;
 }
 
-/* Enterprise Colors */
+/* ====================== ENTERPRISE COLORS ====================== */
 :root {
   --nav: #0F172A;
   --primary: #2563EB;
   --primary-foreground: #ffffff;
 }
 
+/* Font smoothing & feature settings */
 body {
   font-feature-settings: "rlig" 1, "calt" 1;
+  font-synthesis: none; /* Better text rendering */
 }
 
-/* Full Page Loader */
+/* ====================== FULL PAGE LOADER ====================== */
 .full-page-loader {
   position: fixed;
   inset: 0;
@@ -23,11 +25,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 9999;           /* Must be very high */
   backdrop-filter: blur(12px);
 }
 
-/* Scrollbar */
+/* ====================== SCROLLBAR ====================== */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -35,4 +37,10 @@ body {
 ::-webkit-scrollbar-thumb {
   background-color: #94a3b8;
   border-radius: 20px;
+}
+
+/* Firefox support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 transparent;
 }

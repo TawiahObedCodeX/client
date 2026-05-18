@@ -11,12 +11,21 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [isLoading, setIsLoading] = useState(true);
+  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
+    // Force show loader on every mount (refresh or navigation)
     setIsLoading(true);
-    const timer = setTimeout(() => setIsLoading(false), 1400);
+    setShowContent(false);
+
+    // Minimum loader display time = 1.4 seconds
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+      setShowContent(true);
+    }, 1400);
+
     return () => clearTimeout(timer);
-  }, []);
+  }, []); // Runs every time layout mounts (important for refresh)
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#F8FAFC]">
@@ -26,14 +35,21 @@ export default function DashboardLayout({
         <Navbar />
 
         <main className="flex-1 overflow-auto relative p-6 lg:p-8">
+          
+          {/* ==================== FULL PAGE LOADER ==================== */}
           {isLoading && (
             <div className="full-page-loader">
               <Loader size="large" />
             </div>
           )}
 
-          <div className={isLoading ? "opacity-0 pointer-events-none" : "opacity-100"}>
-            {children}
+          {/* Main Content - Only show after loader finishes */}
+          <div
+            className={`min-h-full transition-opacity duration-500 ${
+              isLoading ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            }`}
+          >
+            {showContent && children}
           </div>
         </main>
       </div>

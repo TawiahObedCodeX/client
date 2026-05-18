@@ -16,12 +16,14 @@ export function Loader({ size = 'large' }: LoaderProps) {
 
   return (
     <div className="flex flex-col items-center justify-center gap-5">
+      {/* Spinning ring */}
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ repeat: Infinity, duration: 1.6, ease: "linear" }}
         className={`${sizes[size]} border-4 border-slate-200 border-t-[#2563EB] rounded-full`}
       />
 
+      {/* Branding */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
