@@ -1,5 +1,4 @@
 // app/(auth)/register/page.tsx - Fixed Registration Page
-// Now properly creates account and routes to dashboard
 
 'use client';
 
@@ -24,13 +23,11 @@ import { toast } from 'sonner';
 export default function RegisterPage() {
   const router = useRouter();
   
-  // Form states
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   
-  // Form data
   const [formData, setFormData] = useState({
     fullName: '',
     companyName: '',
@@ -39,18 +36,15 @@ export default function RegisterPage() {
     agreeToTerms: false,
   });
 
-  // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
     }));
-    // Clear error when user types
     if (error) setError('');
   };
 
-  // Validate form
   const validateForm = (): string | null => {
     if (!formData.fullName.trim()) return 'Full name is required';
     if (!formData.companyName.trim()) return 'Company name is required';
@@ -67,14 +61,10 @@ export default function RegisterPage() {
     return null;
   };
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Clear previous errors
     setError('');
     
-    // Validate form
     const validationError = validateForm();
     if (validationError) {
       setError(validationError);
@@ -85,7 +75,6 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
-      // Make API call to register endpoint
       const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
@@ -109,10 +98,9 @@ export default function RegisterPage() {
       setIsSuccess(true);
       toast.success('Account created successfully!');
       
-      // Auto-redirect to dashboard
+      // Redirect to dashboard after delay
       setTimeout(() => {
         router.push('/dashboard');
-        router.refresh();
       }, 2000);
 
     } catch (err) {
@@ -130,7 +118,6 @@ export default function RegisterPage() {
       <div className="min-h-screen bg-gradient-to-br from-[#F8FAFC] to-blue-50 flex items-center justify-center px-4 py-12">
         <div className="max-w-md w-full text-center">
           <div className="bg-white rounded-2xl p-8 border shadow-sm">
-            {/* Success Icon */}
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <Check className="w-10 h-10 text-green-600" />
             </div>
@@ -145,7 +132,6 @@ export default function RegisterPage() {
               Your FDA Ghana account has been created. Redirecting you to your dashboard...
             </p>
             
-            {/* Loading indicator */}
             <div className="w-full bg-slate-200 rounded-full h-2 mb-6 overflow-hidden">
               <div className="bg-[#2563EB] h-2 rounded-full animate-progress"></div>
             </div>
@@ -159,7 +145,6 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        {/* Add animation style */}
         <style jsx>{`
           @keyframes progress {
             0% { width: 0%; }
@@ -177,7 +162,6 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F8FAFC] to-blue-50 flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full">
-        {/* Logo & Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-14 h-14 bg-gradient-to-br from-[#2563EB] to-[#1E40AF] rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-lg shadow-blue-200">
@@ -190,10 +174,8 @@ export default function RegisterPage() {
           </p>
         </div>
 
-        {/* Registration Form Card */}
         <div className="bg-white rounded-2xl p-8 border shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Error Message */}
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />

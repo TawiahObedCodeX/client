@@ -18,14 +18,22 @@ export async function POST(request: Request) {
     }
 
     // TODO: Replace with actual database authentication
-    // This is a demo validation - In production, check against your database
     if (email === 'demo@fda.gov.gh' && password === 'password123') {
       
-      // Set authentication cookie
-      const cookieStore = await cookies();
-      
-      // Set a simple auth token (In production, use JWT or similar)
-      cookieStore.set('auth-token', 'authenticated', {
+      // Create the response first
+      const response = NextResponse.json({
+        success: true,
+        message: 'Login successful',
+        user: {
+          name: 'Tawiah O.',
+          email: email,
+          role: 'applicant',
+        },
+        redirectTo: '/dashboard',
+      });
+
+      // Set cookies on the response
+      response.cookies.set('auth-token', 'authenticated', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
@@ -33,8 +41,7 @@ export async function POST(request: Request) {
         path: '/',
       });
 
-      // Set user data cookie (non-sensitive info only)
-      cookieStore.set('user-data', JSON.stringify({
+      response.cookies.set('user-data', JSON.stringify({
         name: 'Tawiah O.',
         email: email,
         role: 'applicant',
@@ -46,16 +53,7 @@ export async function POST(request: Request) {
         path: '/',
       });
 
-      return NextResponse.json({
-        success: true,
-        message: 'Login successful',
-        user: {
-          name: 'Tawiah O.',
-          email: email,
-          role: 'applicant',
-        },
-        redirectTo: '/dashboard',
-      });
+      return response;
 
     } else {
       return NextResponse.json(

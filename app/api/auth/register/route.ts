@@ -2,7 +2,6 @@
 // Register API endpoint - Handles user registration
 
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 
 export async function POST(request: Request) {
   try {
@@ -35,16 +34,22 @@ export async function POST(request: Request) {
     }
 
     // TODO: Replace with actual database registration
-    // Check if user already exists in your database
-    // Hash the password before storing
     
-    // For demo purposes, always succeed
-    // In production, save to database here
+    // Create response first
+    const response = NextResponse.json({
+      success: true,
+      message: 'Registration successful',
+      user: {
+        name: fullName,
+        email: email,
+        company: companyName,
+        role: 'applicant',
+      },
+      redirectTo: '/dashboard',
+    });
 
-    // Auto-login after registration
-    const cookieStore = await cookies();
-    
-    cookieStore.set('auth-token', 'authenticated', {
+    // Set cookies on the response
+    response.cookies.set('auth-token', 'authenticated', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
@@ -52,7 +57,7 @@ export async function POST(request: Request) {
       path: '/',
     });
 
-    cookieStore.set('user-data', JSON.stringify({
+    response.cookies.set('user-data', JSON.stringify({
       name: fullName,
       email: email,
       company: companyName,
@@ -65,17 +70,7 @@ export async function POST(request: Request) {
       path: '/',
     });
 
-    return NextResponse.json({
-      success: true,
-      message: 'Registration successful',
-      user: {
-        name: fullName,
-        email: email,
-        company: companyName,
-        role: 'applicant',
-      },
-      redirectTo: '/dashboard',
-    });
+    return response;
 
   } catch (error) {
     console.error('Registration error:', error);

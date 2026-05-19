@@ -1,5 +1,4 @@
 // app/(auth)/login/page.tsx - Fixed Login Page
-// Now properly routes to dashboard after successful login
 
 'use client';
 
@@ -13,37 +12,29 @@ import { toast } from 'sonner';
 export default function LoginPage() {
   const router = useRouter();
   
-  // Form states
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   
-  // Form data
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     remember: false,
   });
 
-  // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
     }));
-    // Clear error when user types
     if (error) setError('');
   };
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Clear previous errors
     setError('');
     
-    // Basic validation
     if (!formData.email || !formData.password) {
       setError('Please fill in all fields');
       return;
@@ -52,7 +43,6 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      // Make API call to login endpoint
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -73,11 +63,8 @@ export default function LoginPage() {
       // Success!
       toast.success('Login successful! Redirecting...');
       
-      // Short delay for toast visibility, then redirect
-      setTimeout(() => {
-        router.push('/dashboard');
-        router.refresh(); // Refresh to update server components
-      }, 1000);
+      // Redirect to dashboard
+      router.push('/dashboard');
 
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Login failed';
@@ -88,20 +75,13 @@ export default function LoginPage() {
     }
   };
 
-  // Handle Enter key press
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !isLoading) {
-      handleSubmit(e);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-linear-to-br from-[#F8FAFC] to-blue-50 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-[#F8FAFC] to-blue-50 flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full">
         {/* Logo & Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <div className="w-14 h-14 bg-linear-to-br from-[#2563EB] to-[#1E40AF] rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-lg shadow-blue-200">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#2563EB] to-[#1E40AF] rounded-2xl flex items-center justify-center text-white font-bold text-3xl shadow-lg shadow-blue-200">
               F
             </div>
           </div>
@@ -149,7 +129,6 @@ export default function LoginPage() {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                onKeyDown={handleKeyDown}
                 className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:border-[#2563EB] focus:ring-2 focus:ring-blue-100 focus:bg-white outline-none transition-all"
                 placeholder="Enter your email address"
                 disabled={isLoading}
@@ -170,7 +149,6 @@ export default function LoginPage() {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  onKeyDown={handleKeyDown}
                   className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:border-[#2563EB] focus:ring-2 focus:ring-blue-100 focus:bg-white outline-none transition-all pr-12"
                   placeholder="Enter your password"
                   disabled={isLoading}
