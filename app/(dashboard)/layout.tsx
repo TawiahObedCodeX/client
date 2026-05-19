@@ -1,4 +1,6 @@
-// app/dashboard/layout.tsx
+// app/(dashboard)/layout.tsx - Dashboard Layout
+// This layout wraps all dashboard pages with sidebar and navbar
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -15,36 +17,41 @@ export default function DashboardLayout({
   const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
-    // Force show loader on every mount (refresh or navigation)
+    // Show loader on every page mount/refresh
     setIsLoading(true);
     setShowContent(false);
 
-    // Minimum loader display time = 1.4 seconds (2026 Version)
+    // Loader duration: 1.4 seconds for 2026 version
     const timer = setTimeout(() => {
       setIsLoading(false);
-      setShowContent(true);
+      // Small delay before showing content for smooth transition
+      setTimeout(() => setShowContent(true), 100);
     }, 1400);
 
     return () => clearTimeout(timer);
-  }, []); // Runs every time layout mounts (important for refresh)
+  }, []);
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#F8FAFC]">
+      {/* Sidebar - Hidden on mobile, visible on large screens */}
       <Sidebar />
 
+      {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Top Navbar */}
         <Navbar />
 
+        {/* Page Content */}
         <main className="flex-1 overflow-auto relative p-6 lg:p-8">
           
-          {/* ==================== FULL PAGE LOADER - 2026 VERSION ==================== */}
+          {/* Full Page Loader Overlay */}
           {isLoading && (
             <div className="full-page-loader">
               <Loader size="large" />
             </div>
           )}
 
-          {/* Main Content - Only show after loader finishes */}
+          {/* Main Content with fade transition */}
           <div
             className={`min-h-full transition-opacity duration-500 ${
               isLoading ? 'opacity-0 pointer-events-none' : 'opacity-100'
