@@ -1,10 +1,10 @@
-// components/layout/Sidebar.tsx - Updated Sidebar for 2026
+// components/layout/Sidebar.tsx - Updated with working logout functionality
 // Left sidebar navigation for dashboard pages
 
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   LayoutDashboard,
   PlusCircle,
@@ -14,7 +14,10 @@ import {
   Settings,
   LogOut,
   HelpCircle,
+  Loader2,
 } from 'lucide-react';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
 // Navigation items configuration
 const navItems = [
@@ -58,6 +61,34 @@ const navItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  // Handle logout
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    
+    try {
+      // Call logout API
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+      });
+
+      if (response.ok) {
+        toast.success('Logged out successfully');
+        // Redirect to landing page
+        router.push('/');
+        router.refresh();
+      } else {
+        throw new Error('Logout failed');
+      }
+    } catch (error) {
+      toast.error('Logout failed. Please try again.');
+      console.error('Logout error:', error);
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
 
   return (
     <div className="hidden lg:flex w-72 flex-col border-r bg-white h-full">
@@ -119,7 +150,7 @@ export function Sidebar() {
       <div className="p-4 border-t space-y-2">
         {/* Help Link */}
         <Link
-          href="/dashboard/help"
+          href="/help"
           className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-slate-600 hover:bg-slate-100 transition-colors"
         >
           <HelpCircle className="w-5 h-5 text-slate-500" />
@@ -128,14 +159,21 @@ export function Sidebar() {
 
         {/* Logout Button */}
         <button 
-          className="flex items-center gap-3 px-3 py-2.5 text-red-600 hover:bg-red-50 rounded-xl w-full text-sm font-medium transition-colors"
-          onClick={() => {
-            console.log("Logout clicked");
-            // Add sign out logic here
-          }}
+          onClick={handleLogout}
+          disabled={isLoggingOut}
+          className="flex items-center gap-3 px-3 py-2.5 text-red-600 hover:bg-red-50 rounded-xl w-full text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          <LogOut className="w-5 h-5" />
-          Sign Out
+          {isLoggingOut ? (
+            <>
+              <Loader2 className="w-5 h-5 animate-spin" />
+              Signing out...
+            </>
+          ) : (
+            <>
+              <LogOut className="w-5 h-5" />
+              Sign Out
+            </>
+          )}
         </button>
       </div>
     </div>

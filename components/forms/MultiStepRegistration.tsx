@@ -27,7 +27,7 @@ export function MultiStepRegistration() {
         <Progress value={progress} className="mt-2" />
       </CardHeader>
       <CardContent>
-        <div className="min-h-[300px]">
+        <div className="min-h-75">
           {/* Step content will go here */}
           <p className="text-slate-600">Step {currentStep} form content coming soon.</p>
         </div>
