@@ -1,9 +1,8 @@
-// app/(auth)/register/page.tsx - Fixed Registration Page
+// app/(auth)/register/page.tsx - COMPLETELY FIXED
 
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { 
   Shield, 
@@ -21,7 +20,7 @@ import Link from 'next/link';
 import { toast } from 'sonner';
 
 export default function RegisterPage() {
-  const router = useRouter();
+  const formRef = useRef<HTMLFormElement>(null);
   
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +61,11 @@ export default function RegisterPage() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
+    // PREVENT DEFAULT FORM SUBMISSION - THIS IS CRITICAL
     e.preventDefault();
+    e.stopPropagation();
+    
+    console.log('Registration form submission intercepted'); // Debug log
     setError('');
     
     const validationError = validateForm();
@@ -75,6 +78,12 @@ export default function RegisterPage() {
     setIsLoading(true);
 
     try {
+      console.log('Sending registration request with:', { 
+        fullName: formData.fullName,
+        email: formData.email,
+        companyName: formData.companyName 
+      }); // Debug log
+      
       const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: {
@@ -88,26 +97,31 @@ export default function RegisterPage() {
         }),
       });
 
+      console.log('Response status:', response.status); // Debug log
       const data = await response.json();
+      console.log('Response data:', data); // Debug log
 
       if (!response.ok) {
         throw new Error(data.error || 'Registration failed');
       }
 
+      // Check for cookies
+      console.log('All cookies:', document.cookie); // Debug log
+
       // Success!
       setIsSuccess(true);
       toast.success('Account created successfully!');
       
-      // Redirect to dashboard after delay
+      // Redirect after delay
       setTimeout(() => {
-        router.push('/dashboard');
+        window.location.href = '/dashboard';
       }, 2000);
 
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Registration failed';
+      console.error('Registration error:', err); // Debug log
       setError(message);
       toast.error(message);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -138,7 +152,7 @@ export default function RegisterPage() {
             
             <Button 
               className="w-full bg-[#2563EB] hover:bg-[#1E40AF]"
-              onClick={() => router.push('/dashboard')}
+              onClick={() => window.location.href = '/dashboard'}
             >
               Go to Dashboard Now
             </Button>
@@ -175,7 +189,8 @@ export default function RegisterPage() {
         </div>
 
         <div className="bg-white rounded-2xl p-8 border shadow-sm">
-          <form onSubmit={handleSubmit} className="space-y-5">
+          {/* IMPORTANT: Added ref and noValidate */}
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-5" noValidate>
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />

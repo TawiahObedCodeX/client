@@ -1,5 +1,4 @@
 // app/api/auth/register/route.ts
-// Register API endpoint - Handles user registration
 
 import { NextResponse } from 'next/server';
 
@@ -7,6 +6,8 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { fullName, companyName, email, password } = body;
+
+    console.log('Registration attempt:', { email, fullName }); // Debug log
 
     // Basic validation
     if (!fullName || !companyName || !email || !password) {
@@ -33,9 +34,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // TODO: Replace with actual database registration
-    
-    // Create response first
+    // Create response with success data
     const response = NextResponse.json({
       success: true,
       message: 'Registration successful',
@@ -45,31 +44,35 @@ export async function POST(request: Request) {
         company: companyName,
         role: 'applicant',
       },
-      redirectTo: '/dashboard',
     });
 
-    // Set cookies on the response
-    response.cookies.set('auth-token', 'authenticated', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+    // Set auth cookies on the response
+    response.cookies.set({
+      name: 'auth-token',
+      value: 'authenticated',
+      httpOnly: false, // Changed to false so client can see it
+      secure: false, // Set to false for development
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24, // 24 hours
+      path: '/',
+    });
+
+    response.cookies.set({
+      name: 'user-data',
+      value: JSON.stringify({
+        name: fullName,
+        email: email,
+        company: companyName,
+        role: 'applicant',
+      }),
+      httpOnly: false,
+      secure: false,
       sameSite: 'lax',
       maxAge: 60 * 60 * 24,
       path: '/',
     });
 
-    response.cookies.set('user-data', JSON.stringify({
-      name: fullName,
-      email: email,
-      company: companyName,
-      role: 'applicant',
-    }), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24,
-      path: '/',
-    });
-
+    console.log('Registration successful, cookies set'); // Debug log
     return response;
 
   } catch (error) {

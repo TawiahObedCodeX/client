@@ -1,17 +1,14 @@
-// app/(auth)/login/page.tsx - Fixed Login Page
+// app/(auth)/login/page.tsx
 
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Shield, Eye, EyeOff, Loader2, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';
 
 export default function LoginPage() {
-  const router = useRouter();
-  
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -19,30 +16,32 @@ export default function LoginPage() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    remember: false,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: value,
     }));
     if (error) setError('');
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
+  const handleLogin = async () => {
+    console.log('=== LOGIN CLICKED ===');
+    console.log('Email:', formData.email);
     
     if (!formData.email || !formData.password) {
       setError('Please fill in all fields');
       return;
     }
 
+    setError('');
     setIsLoading(true);
 
     try {
+      console.log('Fetching /api/auth/login...');
+      
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
@@ -54,23 +53,30 @@ export default function LoginPage() {
         }),
       });
 
+      console.log('Response status:', response.status);
       const data = await response.json();
+      console.log('Response data:', data);
 
       if (!response.ok) {
         throw new Error(data.error || 'Login failed');
       }
 
-      // Success!
+      // Check if cookie was set
+      console.log('Cookies after login:', document.cookie);
+      
       toast.success('Login successful! Redirecting...');
       
-      // Redirect to dashboard
-      router.push('/dashboard');
+      // Small delay to let cookies set, then navigate
+      setTimeout(() => {
+        console.log('Navigating to /dashboard');
+        window.location.href = '/dashboard';
+      }, 500);
 
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Login failed';
+      console.error('Error:', message);
       setError(message);
       toast.error(message);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -108,7 +114,8 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          {/* NO FORM TAG - Using div to prevent any form submission */}
+          <div className="space-y-5">
             {/* Error Message */}
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex items-center gap-2">
@@ -126,9 +133,9 @@ export default function LoginPage() {
                 id="email"
                 name="email"
                 type="email"
-                required
                 value={formData.email}
                 onChange={handleChange}
+                onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
                 className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:border-[#2563EB] focus:ring-2 focus:ring-blue-100 focus:bg-white outline-none transition-all"
                 placeholder="Enter your email address"
                 disabled={isLoading}
@@ -146,9 +153,9 @@ export default function LoginPage() {
                   id="password"
                   name="password"
                   type={showPassword ? 'text' : 'password'}
-                  required
                   value={formData.password}
                   onChange={handleChange}
+                  onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
                   className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:border-[#2563EB] focus:ring-2 focus:ring-blue-100 focus:bg-white outline-none transition-all pr-12"
                   placeholder="Enter your password"
                   disabled={isLoading}
@@ -158,50 +165,38 @@ export default function LoginPage() {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1"
-                  tabIndex={-1}
-                  aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
 
-            {/* Remember & Forgot */}
-            <div className="flex items-center justify-between">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  name="remember"
-                  checked={formData.remember}
-                  onChange={handleChange}
-                  className="rounded border-slate-300 text-[#2563EB] focus:ring-[#2563EB]"
-                />
-                <span className="text-sm text-slate-600">Remember me</span>
-              </label>
+            {/* Forgot Password Link */}
+            <div className="flex justify-end">
               <Link href="/forgot-password" className="text-sm text-[#2563EB] hover:underline">
                 Forgot password?
               </Link>
             </div>
 
-            {/* Submit Button */}
-            <Button 
-              type="submit" 
-              className="w-full bg-[#2563EB] hover:bg-[#1E40AF] h-11"
+            {/* Login Button - Direct onClick, no form submission */}
+            <button
+              onClick={handleLogin}
               disabled={isLoading}
+              className="w-full bg-[#2563EB] hover:bg-[#1E40AF] text-white h-11 rounded-lg font-medium inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  <Loader2 className="w-4 h-4 animate-spin" />
                   Signing in...
                 </>
               ) : (
                 <>
-                  <Shield className="w-4 h-4 mr-2" />
+                  <Shield className="w-4 h-4" />
                   Sign In to Dashboard
                 </>
               )}
-            </Button>
-          </form>
+            </button>
+          </div>
 
           {/* Divider */}
           <div className="relative my-6">
