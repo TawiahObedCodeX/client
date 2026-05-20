@@ -1,72 +1,135 @@
-// components/common/Loader.tsx - Loading spinner component for 2026
-// Used during page transitions and data loading
+// ─────────────────────────────────────────────────
+// components/common/Loader.tsx
+// Loading Spinner Component
+// Version: 2026.1.0
+// ─────────────────────────────────────────────────
 
-'use client';
+"use client"
 
-import { motion } from 'framer-motion';
-import { Shield } from 'lucide-react';
+import { cn } from "@/lib/utils"
+import { Loader2 } from "lucide-react"
 
+// ─────────────────────────────────────────────────
+// Type Definitions
+// ─────────────────────────────────────────────────
 interface LoaderProps {
-  size?: 'small' | 'medium' | 'large';
+  size?: "small" | "medium" | "large" | "xlarge"
+  color?: "primary" | "white" | "slate"
+  text?: string
+  fullScreen?: boolean
+  className?: string
 }
 
-export function Loader({ size = 'large' }: LoaderProps) {
-  // Size mappings
-  const sizes = {
-    small: {
-      ring: 'w-8 h-8 border-3',
-      icon: 'w-5 h-5',
-      text: 'text-lg',
-    },
-    medium: {
-      ring: 'w-14 h-14 border-4',
-      icon: 'w-6 h-6',
-      text: 'text-xl',
-    },
-    large: {
-      ring: 'w-20 h-20 border-4',
-      icon: 'w-7 h-7',
-      text: 'text-2xl',
-    },
-  };
+// ─────────────────────────────────────────────────
+// Size Configuration
+// ─────────────────────────────────────────────────
+const sizeConfig = {
+  small: {
+    icon: "w-4 h-4",
+    text: "text-xs",
+    container: "gap-2",
+  },
+  medium: {
+    icon: "w-8 h-8",
+    text: "text-sm",
+    container: "gap-3",
+  },
+  large: {
+    icon: "w-12 h-12",
+    text: "text-base",
+    container: "gap-4",
+  },
+  xlarge: {
+    icon: "w-16 h-16",
+    text: "text-lg",
+    container: "gap-5",
+  },
+}
 
-  const currentSize = sizes[size];
+// ─────────────────────────────────────────────────
+// Color Configuration
+// ─────────────────────────────────────────────────
+const colorConfig = {
+  primary: "text-[#2563EB]",
+  white: "text-white",
+  slate: "text-slate-400",
+}
 
-  return (
-    <div className="flex flex-col items-center justify-center gap-5">
-      {/* Spinning Ring Loader */}
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ 
-          repeat: Infinity, 
-          duration: 1.6, 
-          ease: "linear" 
-        }}
-        className={`${currentSize.ring} border-slate-200 border-t-[#2563EB] rounded-full shadow-lg`}
+// ─────────────────────────────────────────────────
+// Loader Component
+// ─────────────────────────────────────────────────
+export function Loader({
+  size = "medium",
+  color = "primary",
+  text,
+  fullScreen = false,
+  className,
+}: LoaderProps) {
+  const sizeStyle = sizeConfig[size]
+  const colorStyle = colorConfig[color]
+
+  const loaderContent = (
+    <div
+      className={cn(
+        "flex flex-col items-center justify-center",
+        sizeStyle.container,
+        className
+      )}
+    >
+      <Loader2
+        className={cn(
+          "animate-spin",
+          sizeStyle.icon,
+          colorStyle
+        )}
       />
-
-      {/* FDA Ghana Branding */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className="flex items-center gap-3"
-      >
-        <Shield className={`${currentSize.icon} text-[#2563EB]`} />
-        <span className={`font-bold ${currentSize.text} tracking-wider text-[#0F172A]`}>
-          FDA GHANA
-        </span>
-      </motion.div>
-
-      {/* Loading Text */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="text-slate-500 text-sm font-medium"
-      >
-        Loading secure platform...
-      </motion.p>
+      {text && (
+        <p
+          className={cn(
+            "font-medium",
+            sizeStyle.text,
+            colorStyle
+          )}
+        >
+          {text}
+        </p>
+      )}
     </div>
-  );
+  )
+
+  // Full screen overlay
+  if (fullScreen) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm">
+        {loaderContent}
+      </div>
+    )
+  }
+
+  return loaderContent
+}
+
+// ─────────────────────────────────────────────────
+// Page Loader (for route transitions)
+// ─────────────────────────────────────────────────
+export function PageLoader() {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]/90 backdrop-blur-md">
+      <div className="text-center">
+        <Loader2 className="w-16 h-16 text-white animate-spin mx-auto mb-4" />
+        <p className="text-white/70 text-sm font-medium">Loading...</p>
+      </div>
+    </div>
+  )
+}
+
+// ─────────────────────────────────────────────────
+// Inline Loader (for buttons and small spaces)
+// ─────────────────────────────────────────────────
+export function InlineLoader({ className }: { className?: string }) {
+  return (
+    <Loader2
+      className={cn("w-4 h-4 animate-spin", className)}
+    />
+  )
 }

@@ -1,3 +1,9 @@
+// ─────────────────────────────────────────────────
+// components/ui/progress.tsx
+// Progress Bar Component
+// Version: 2026.1.0
+// ─────────────────────────────────────────────────
+
 "use client"
 
 import * as React from "react"
@@ -21,7 +27,7 @@ function Progress({
     >
       <ProgressPrimitive.Indicator
         data-slot="progress-indicator"
-        className="size-full flex-1 bg-primary transition-all"
+        className="size-full flex-1 bg-primary transition-all duration-300 ease-in-out"
         style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
       />
     </ProgressPrimitive.Root>
