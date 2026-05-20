@@ -1,41 +1,43 @@
 // app/api/auth/logout/route.ts
-// Logout API endpoint - Clears authentication cookies
+// Complete logout endpoint
 
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server'
+import { getAuthCookie, verifyToken, clearAuthCookie, invalidateSession } from '@/lib/auth'
 
-export async function POST() {
+export async function POST(request: NextRequest) {
   try {
+    console.log('=== LOGOUT API CALLED ===')
+
+    // Get current token
+    const token = await getAuthCookie()
+    
+    if (token) {
+      // Verify and invalidate session
+      const payload = await verifyToken(token)
+      if (payload) {
+        await invalidateSession(token)
+        console.log('✅ Session invalidated for user:', payload.email)
+      }
+    }
+
     // Create response
     const response = NextResponse.json({
       success: true,
       message: 'Logged out successfully',
       redirectTo: '/',
-    });
+    })
 
-    // Clear auth cookies by setting them with past expiry
-    response.cookies.set('auth-token', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 0,
-      path: '/',
-    });
+    // Clear auth cookie
+    await clearAuthCookie()
 
-    response.cookies.set('user-data', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 0,
-      path: '/',
-    });
-
-    return response;
+    console.log('✅ Logout complete')
+    return response
 
   } catch (error) {
-    console.error('Logout error:', error);
+    console.error('❌ Logout error:', error)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Logout failed. Please try again.' },
       { status: 500 }
-    );
+    )
   }
 }

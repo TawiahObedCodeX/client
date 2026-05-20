@@ -1,42 +1,126 @@
-// proxy.ts - ROOT OF PROJECT
-// Next.js 16 uses proxy instead of middleware
+// proxy.ts - Next.js Middleware for Authentication
+// Runs on every request to protected routes
 
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { jwtVerify } from 'jose'
 
-export function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
+// Public routes that don't require authentication
+const PUBLIC_ROUTES = [
+  '/',
+  '/login',
+  '/register',
+  '/forgot-password',
+  '/reset-password',
+  '/verify-email',
+]
 
-  console.log('=== PROXY RUNNING ===');
-  console.log('Path:', pathname);
+// Auth routes (redirect to dashboard if already authenticated)
+const AUTH_ROUTES = ['/login', '/register', '/forgot-password', '/reset-password']
 
-  // Get auth token from cookies
-  const authToken = request.cookies.get('auth-token')?.value;
-  console.log('Auth token:', authToken);
+// API routes that are public
+const PUBLIC_API_ROUTES = [
+  '/api/auth/login',
+  '/api/auth/register',
+  '/api/auth/forgot-password',
+  '/api/auth/reset-password',
+  '/api/auth/verify-email',
+  '/api/health',
+]
 
-  const isAuthenticated = authToken === 'authenticated';
-
-  // Protected routes
-  if (pathname.startsWith('/dashboard')) {
-    if (!isAuthenticated) {
-      console.log('❌ Not authenticated - redirecting to /login');
-      const loginUrl = new URL('/login', request.url);
-      return NextResponse.redirect(loginUrl);
-    }
-    console.log('✅ Authenticated - allowing dashboard access');
-    return NextResponse.next();
+/**
+ * Verify the JWT token from cookies
+ */
+async function verifyAuth(request: NextRequest): Promise<boolean> {
+  const token = request.cookies.get('auth-token')?.value
+  
+  if (!token) return false
+  
+  try {
+    const secret = new TextEncoder().encode(
+      process.env.JWT_SECRET || 'default-secret'
+    )
+    
+    await jwtVerify(token, secret, {
+      issuer: 'fda-ghana-firms',
+      audience: 'fda-ghana-users',
+    })
+    
+    return true
+  } catch (error) {
+    // Token is invalid or expired
+    return false
   }
-
-  // Auth pages - redirect if already logged in
-  if ((pathname === '/login' || pathname === '/register') && isAuthenticated) {
-    console.log('✅ Already authenticated - redirecting to /dashboard');
-    const dashboardUrl = new URL('/dashboard', request.url);
-    return NextResponse.redirect(dashboardUrl);
-  }
-
-  return NextResponse.next();
 }
 
+export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // Debug logging (remove in production)
+  if (process.env.NODE_ENV === 'development') {
+    console.log('=== PROXY ===')
+    console.log('Path:', pathname)
+  }
+
+  // Allow public assets and Next.js internals
+  if (
+    pathname.startsWith('/_next/') ||
+    pathname.startsWith('/favicon.ico') ||
+    pathname.startsWith('/public/') ||
+    pathname.includes('.') // Static files
+  ) {
+    return NextResponse.next()
+  }
+
+  // Check authentication
+  const isAuthenticated = await verifyAuth(request)
+
+  // Public API routes - allow through
+  if (PUBLIC_API_ROUTES.some(route => pathname.startsWith(route))) {
+    return NextResponse.next()
+  }
+
+  // Protected API routes
+  if (pathname.startsWith('/api/') && !isAuthenticated) {
+    return NextResponse.json(
+      { error: 'Unauthorized', authenticated: false },
+      { status: 401 }
+    )
+  }
+
+  // Check if route is public
+  const isPublicRoute = PUBLIC_ROUTES.some(route => 
+    pathname === route || pathname.startsWith(route + '/')
+  )
+
+  // Check if route is an auth route
+  const isAuthRoute = AUTH_ROUTES.some(route => pathname === route)
+
+  // Protected routes - redirect to login
+  if (!isPublicRoute && !isAuthenticated) {
+    const loginUrl = new URL('/login', request.url)
+    loginUrl.searchParams.set('redirect', pathname)
+    return NextResponse.redirect(loginUrl)
+  }
+
+  // Auth routes - redirect to dashboard if already authenticated
+  if (isAuthRoute && isAuthenticated) {
+    return NextResponse.redirect(new URL('/dashboard', request.url))
+  }
+
+  // Allow the request
+  return NextResponse.next()
+}
+
+// Configure which routes the middleware runs on
 export const config = {
-  matcher: ['/dashboard/:path*', '/login', '/register'],
-};
+  matcher: [
+    /*
+     * Match all request paths except:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!_next/static|_next/image|favicon.ico).*)',
+  ],
+}
