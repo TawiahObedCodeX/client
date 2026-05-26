@@ -1,11 +1,11 @@
-// prisma/seed.ts - Database Seeding Script
-// Working configuration for Prisma 7.8.0
-// Version: 2026.1.0
-
+import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '@prisma/client'
+import pg from 'pg'
 import { hashPassword } from '../lib/password'
 
-const prisma = new PrismaClient()
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL })
+const adapter = new PrismaPg(pool)
+const prisma = new PrismaClient({ adapter })
 
 async function main() {
   console.log('🌱 Starting database seed...')
