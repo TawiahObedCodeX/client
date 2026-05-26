@@ -1,256 +1,515 @@
+# FDA Ghana Regulation Management System (FRMS)
 
+> A national-scale enterprise RegTech platform that digitizes, automates, and secures the full regulatory lifecycle of the Food and Drugs Authority Ghana — from product application submission to certificate issuance and public verification.
 
-<!-- 3D Animated Header -->
-<h1 align="center">
- ⚡ FDA Ghana Regulation Management System (FRMS)
-</h1>
-
-<h3 align="center">
- Enterprise Government Regulation Platform • Digital Transformation • RegTech Infrastructure
-</h3>
+---
 
 <div align="center">
 
-<img src="https://readme-typing-svg.herokuapp.com?font=Orbitron&size=30&duration=3000&pause=1000&color=00F7FF&center=true&vCenter=true&width=1000&lines=FDA+Ghana+Regulation+Management+System;Enterprise+Regulatory+Technology+(RegTech);Secure+Workflow+Automation;Government+Digital+Transformation;Built+With+Next.js+%26+TypeScript;Scalable+Cloud+Infrastructure+🚀" />
+[![Next.js](https://img.shields.io/badge/Next.js-15.3-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript)](https://typescriptlang.org)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql)](https://postgresql.org)
+[![Prisma](https://img.shields.io/badge/Prisma-6.7-2D3748?style=for-the-badge&logo=prisma)](https://prisma.io)
+[![AWS](https://img.shields.io/badge/AWS_S3-Cloud-FF9900?style=for-the-badge&logo=amazon-aws)](https://aws.amazon.com)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 </div>
 
 ---
 
-# 🏛️ About The Project
+## Table of Contents
 
-The **FDA Ghana Regulation Management System (FRMS)** is a modern enterprise-grade regulatory platform designed to digitize and automate the regulatory workflows of the Food and Drugs Authority (FDA) Ghana.
-
-The platform transforms traditional paper-based product registration and approval systems into a secure, scalable, transparent, and high-performance digital ecosystem.
-
-FRMS enables manufacturers, importers, and FDA officers to manage regulatory processes efficiently through modern web technologies, workflow automation, cloud infrastructure, and secure document management systems.
-
-The project focuses on:
-
-- ⚡ Digital Transformation
-- 🔐 Enterprise Security
-- 📑 Regulatory Workflow Automation
-- ☁️ Cloud Infrastructure
-- 📊 Transparency & Monitoring
-- 🧠 Smart Compliance Systems
-- 🏛️ Government Technology Innovation (GovTech)
-- 🧬 Regulatory Technology (RegTech)
+- [What Is FRMS](#what-is-frms)
+- [The Problem It Solves](#the-problem-it-solves)
+- [How It Works — User Journey](#how-it-works--user-journey)
+- [Core Features](#core-features)
+- [Design System](#design-system)
+- [Architecture Overview](#architecture-overview)
+- [Full Project Structure](#full-project-structure)
+- [Getting Started](#getting-started)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
 
 ---
 
-# 🌍 The Vision Behind FRMS
+## What Is FRMS
 
-Historically, many regulatory processes relied heavily on manual paperwork, physical office visits, and disconnected systems. This created:
+FRMS is a **government-grade regulatory platform** built for the Food and Drugs Authority of Ghana. It replaces manual, paper-based workflows with a centralized digital system where:
 
-- Delays in approvals
-- Administrative bottlenecks
-- Poor application visibility
-- Heavy documentation burdens
-- Difficult compliance tracking
+- **Manufacturers and importers** submit product registration applications online
+- **FDA officers and reviewers** process, review, and approve applications through role-based workflows
+- **The public** can verify any approved product's authenticity via QR code
 
-FRMS solves these challenges by introducing a centralized digital regulation platform where:
-
-✅ Applications are submitted online  
-✅ Reviews move through automated workflows  
-✅ Documents are securely stored in the cloud  
-✅ QR verification prevents fraud  
-✅ Regulatory timelines are monitored automatically  
-✅ Public product verification increases transparency  
-
-This project represents a real-world enterprise software solution designed for national-scale regulatory operations.
+Think of it as a full-stack digital government office — secure, traceable, and built to operate at national scale.
 
 ---
 
-# 🧠 Enterprise-Level Features
+## The Problem It Solves
 
----
+Before FRMS, Ghana's FDA regulatory process involved:
 
-## 🔹 Integrated Registration Portal
-
-A secure online registration portal that allows businesses to submit applications digitally.
-
-### Features:
-- Multi-step registration workflow
-- Drag-and-drop document uploads
-- Product registration dashboard
-- Real-time application tracking
-- Smart form persistence
-- Responsive mobile-friendly UI
-
----
-
-## 🔹 Departmental Workflow Engine
-
-An internal enterprise workflow system for FDA staff and departments.
-
-### Features:
-- Role-based approval routing
-- Department assignment logic
-- Scientific review workflows
-- Internal review notes
-- Approval escalation pipeline
-- Officer activity monitoring
-
----
-
-## 🔹 Statutory Timeline Tracker
-
-A compliance-aware monitoring engine designed for regulatory deadlines.
-
-### Features:
-- SLA tracking system
-- Automated overdue alerts
-- Escalation notifications
-- Clock-stop logic
-- Compliance monitoring dashboard
-
----
-
-## 🔹 Secure Verification & QR Issuance
-
-A public-facing product verification infrastructure.
-
-### Features:
-- Automated PDF certificate generation
-- QR code verification system
-- Public verification registry
-- Authenticity validation
-- Immutable approved records
-
----
-
-# 🔐 Enterprise Security Architecture
-
-FRMS implements modern enterprise-grade security practices:
-
-| Security Feature | Description |
+| Old Way | The Real Cost |
 |---|---|
-| AES-256 Encryption | Protects sensitive data |
-| RBAC | Role-Based Access Control |
-| Immutable Records | Prevents unauthorized modifications |
-| Secure File Uploads | Cloud-secured document storage |
-| Audit Logs | Tracks regulatory actions |
-| Protected Routes | Authenticated access control |
-| Secure APIs | Backend validation & authorization |
+| Paper-based applications | Weeks of delays, lost documents |
+| Physical office visits | Applicants traveling multiple times |
+| Manual department routing | No visibility into application status |
+| Disconnected approval chains | No audit trail, accountability gaps |
+| Certificate fraud | No public verification mechanism |
+| No deadline enforcement | Regulatory SLAs routinely missed |
+
+FRMS addresses every one of these pain points with a purpose-built digital system.
 
 ---
 
-# ☁️ Cloud Infrastructure
+## How It Works — User Journey
 
-The system is designed for scalability and production deployment.
+### For Applicants (Manufacturers / Importers)
 
-### Infrastructure:
-- AWS S3 Cloud Storage
-- PostgreSQL Database
-- Prisma ORM
-- Secure API Layer
-- Optimized File Handling
-- Cloud Deployment Pipelines
+```
+Register Account → Submit Application → Upload Documents
+→ Track Status in Real Time → Receive Certificate → Share QR Code
+```
 
----
+### For FDA Officers
 
-# ⚙️ Tech Stack
+```
+Login → View Assigned Applications → Review Documents
+→ Add Scientific Notes → Approve / Reject / Escalate → Monitor SLAs
+```
 
-<p align="center">
+### For the General Public
 
-<!-- Frontend -->
-<img src="https://skillicons.dev/icons?i=nextjs" height="65" alt="Next.js" />
-<img src="https://skillicons.dev/icons?i=react" height="65" alt="React" />
-<img src="https://skillicons.dev/icons?i=typescript" height="65" alt="TypeScript" />
-<img src="https://skillicons.dev/icons?i=tailwind" height="65" alt="TailwindCSS" />
-<img src="https://skillicons.dev/icons?i=javascript" height="65" alt="JavaScript" />
-
-<!-- Backend -->
-<img src="https://skillicons.dev/icons?i=nodejs" height="65" alt="Node.js" />
-<img src="https://skillicons.dev/icons?i=express" height="65" alt="Express.js" />
-
-<!-- Database -->
-<img src="https://skillicons.dev/icons?i=postgres" height="65" alt="PostgreSQL" />
-<img src="https://skillicons.dev/icons?i=prisma" height="65" alt="Prisma" />
-
-<!-- Cloud -->
-<img src="https://skillicons.dev/icons?i=aws" height="65" alt="AWS" />
-<img src="https://skillicons.dev/icons?i=docker" height="65" alt="Docker" />
-<img src="https://skillicons.dev/icons?i=vercel" height="65" alt="Vercel" />
-
-<!-- Tools -->
-<img src="https://skillicons.dev/icons?i=git" height="65" alt="Git" />
-<img src="https://skillicons.dev/icons?i=github" height="65" alt="GitHub" />
-<img src="https://skillicons.dev/icons?i=vscode" height="65" alt="VS Code" />
-<img src="https://skillicons.dev/icons?i=figma" height="65" alt="Figma" />
-
-</p>
+```
+Scan QR Code on Product → Redirected to Public Verification Page
+→ View FDA-Approved Product Record → Confirm Authenticity
+```
 
 ---
 
-# 📂 Enterprise Project Structure
+## Core Features
 
-```bash
+### Integrated Registration Portal
+
+The applicant-facing face of FRMS. Built as a guided multi-step experience.
+
+- **Multi-step registration form** with progress saving — applicants never lose work
+- **Drag-and-drop document upload** with cloud storage (AWS S3)
+- **Smart form validation** — prevents incomplete or incorrectly formatted submissions
+- **Real-time application tracking** — applicants see exactly where their application sits in the review pipeline
+- **Mobile-responsive** — works on all devices, including low-bandwidth conditions
+
+### Departmental Workflow Engine
+
+The internal operations layer used by FDA staff.
+
+- **Role-based routing** — applications automatically route to the right department (scientific review, legal, labelling, etc.)
+- **Approval pipeline** — multi-level review with escalation support for complex cases
+- **Internal review notes** — officers leave comments visible only to FDA staff
+- **Activity audit trail** — every action is logged with timestamp and officer identity
+- **Officer performance dashboard** — supervisors can monitor workload distribution
+
+### Statutory Timeline Tracker
+
+Regulatory bodies have legal deadlines. FRMS enforces them automatically.
+
+- **SLA engine** — each application type has a defined response window; the system counts down from submission
+- **Clock-stop logic** — timer pauses when FDA requests more information from the applicant, resumes on response
+- **Automated overdue alerts** — escalation emails and dashboard flags when deadlines approach or are missed
+- **Compliance reporting** — management can export SLA adherence reports
+
+### Secure Verification & Certificate Issuance
+
+The trust layer that connects approved products to the public.
+
+- **Automated PDF certificate generation** on approval, signed with institutional details
+- **Unique QR code per approval** — embedded in the certificate, links to a live public registry
+- **Public verification page** — anyone can scan and confirm a product is genuinely FDA-approved
+- **Immutable approval records** — approved records cannot be edited without a full audit event
+
+---
+
+## Design System
+
+### Color Palette
+
+The palette is built around national identity and institutional trust.
+
+```css
+/* Primary — Deep Authority Navy */
+--color-primary:        #0D1B2A;
+--color-primary-light:  #1A3047;
+
+/* Brand Accent — Ghana Gold */
+--color-gold:           #D4A017;
+--color-gold-light:     #F0C040;
+
+/* Health Accent — Regulatory Green */
+--color-green:          #00784A;
+--color-green-light:    #00A36C;
+
+/* Surface */
+--color-surface:        #F5F7FA;
+--color-card:           #FFFFFF;
+--color-border:         #E2E8F0;
+
+/* Status Colors */
+--color-success:        #059669;
+--color-warning:        #D97706;
+--color-error:          #DC2626;
+--color-info:           #0369A1;
+
+/* Text */
+--color-text-primary:   #0F172A;
+--color-text-secondary: #475569;
+--color-text-muted:     #94A3B8;
+```
+
+### Typography
+
+```css
+/* Headings — Editorial authority */
+font-family: 'Sora', sans-serif;
+
+/* Body — Clean readability */
+font-family: 'DM Sans', sans-serif;
+
+/* Monospace — Code, IDs, references */
+font-family: 'JetBrains Mono', monospace;
+```
+
+**Google Fonts import:**
+```html
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+```
+
+### Spacing Scale (Tailwind custom tokens)
+
+```js
+// tailwind.config.ts
+spacing: {
+  '18': '4.5rem',
+  '22': '5.5rem',
+  '88': '22rem',
+  '112': '28rem',
+  '128': '32rem',
+}
+```
+
+---
+
+## Architecture Overview
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        CLIENT LAYER                             │
+│          Next.js 15 App Router + React 19 + TypeScript          │
+│   Applicant Portal │ Officer Dashboard │ Admin Panel │ Public    │
+└──────────────────────────┬──────────────────────────────────────┘
+                           │ HTTPS / REST
+┌──────────────────────────▼──────────────────────────────────────┐
+│                        API LAYER                                │
+│              Next.js Route Handlers + Middleware                │
+│     Auth Guards │ Rate Limiting │ Input Validation (Zod)        │
+└──────┬──────────────────┬──────────────────────┬───────────────┘
+       │                  │                       │
+┌──────▼──────┐  ┌────────▼────────┐  ┌──────────▼──────────────┐
+│  PostgreSQL │  │    AWS S3       │  │  Background Jobs         │
+│  via Prisma │  │  Document Store │  │  SLA engine, Emails,     │
+│  (Primary   │  │  + Presigned    │  │  QR generation, PDF      │
+│   Database) │  │  URLs           │  │  certificates            │
+└─────────────┘  └─────────────────┘  └─────────────────────────┘
+```
+
+---
+
+## Full Project Structure
+
+```
 frms-fda-ghana/
+│
 ├── app/
+│   ├── (public)/
+│   │   ├── page.tsx
+│   │   ├── verify/[qrToken]/page.tsx
+│   │   └── layout.tsx
 │   ├── (auth)/
 │   │   ├── login/page.tsx
-│   │   └── register/page.tsx
-│   ├── (dashboard)/
+│   │   ├── register/page.tsx
+│   │   ├── forgot-password/page.tsx
+│   │   └── reset-password/[token]/page.tsx
+│   ├── (applicant)/
 │   │   ├── layout.tsx
-│   │   ├── page.tsx
-│   │   ├── new-registration/
-│   │   │   └── page.tsx
+│   │   ├── dashboard/page.tsx
 │   │   ├── applications/
-│   │   │   └── [id]/page.tsx
+│   │   │   ├── page.tsx
+│   │   │   ├── new/page.tsx
+│   │   │   └── [id]/
+│   │   │       ├── page.tsx
+│   │   │       └── documents/page.tsx
+│   │   ├── certificates/page.tsx
 │   │   ├── profile/page.tsx
 │   │   └── settings/page.tsx
-│   ├── layout.tsx
-│   ├── page.tsx
-│   └── globals.css
+│   ├── (officer)/
+│   │   ├── layout.tsx
+│   │   ├── dashboard/page.tsx
+│   │   ├── queue/page.tsx
+│   │   ├── review/[id]/page.tsx
+│   │   ├── sla/page.tsx
+│   │   └── reports/page.tsx
+│   ├── (admin)/
+│   │   ├── layout.tsx
+│   │   ├── dashboard/page.tsx
+│   │   ├── users/page.tsx
+│   │   ├── departments/page.tsx
+│   │   ├── audit-log/page.tsx
+│   │   └── system/page.tsx
+│   └── api/
+│       ├── auth/
+│       ├── applications/
+│       ├── certificates/
+│       ├── uploads/
+│       ├── sla/
+│       └── admin/
 │
 ├── components/
 │   ├── layout/
-│   │   ├── Navbar.tsx
-│   │   ├── Sidebar.tsx
-│   │   └── Footer.tsx
-│   │
 │   ├── ui/
-│   │
 │   ├── dashboard/
-│   │   ├── DashboardCards.tsx
-│   │   ├── RecentApplicationsTable.tsx
-│   │   └── StatusTimeline.tsx
-│   │
 │   ├── forms/
-│   │   └── MultiStepRegistration.tsx
-│   │
 │   ├── upload/
-│   │   └── FileUpload.tsx
-│   │
-│   ├── common/
-│   │   ├── StatusBadge.tsx
-│   │   ├── Loader.tsx
-│   │   ├── Skeleton.tsx
-│   │   └── Toast.tsx
-│   │
-│   └── modals/
+│   ├── verification/
+│   └── common/
 │
 ├── lib/
-│   ├── prisma.ts
-│   ├── utils.ts
-│   └── s3.ts
-│
 ├── hooks/
-│   └── useFormPersist.ts
-│
 ├── store/
-│   └── useAppStore.ts
-│
+├── middleware.ts
 ├── types/
-│   └── index.ts
-│
 ├── prisma/
-│   └── schema.prisma
-│
 ├── public/
-│   └── logo.svg
-│
 ├── styles/
-│
+├── .env.example
+├── next.config.ts
+├── tailwind.config.ts
+├── tsconfig.json
 └── package.json
+```
+
+---
+
+## API Reference
+
+All routes require a valid session cookie unless marked `[Public]`.
+
+### Authentication
+
+| Method | Route | Description |
+|---|---|---|
+| `POST` | `/api/auth/register` | Create a new applicant account |
+| `POST` | `/api/auth/[...nextauth]` | NextAuth login/logout |
+| `POST` | `/api/auth/forgot-password` | Request password reset email |
+| `POST` | `/api/auth/reset-password` | Submit new password with token |
+
+### Applications
+
+| Method | Route | Description | Role |
+|---|---|---|---|
+| `GET` | `/api/applications` | List applications (filtered by role) | All |
+| `POST` | `/api/applications` | Create draft application | Applicant |
+| `GET` | `/api/applications/[id]` | Get single application | Owner / Officer |
+| `PATCH` | `/api/applications/[id]` | Update draft fields | Applicant |
+| `POST` | `/api/applications/[id]/submit` | Submit for review | Applicant |
+| `POST` | `/api/applications/[id]/review` | Officer review action | Officer+ |
+| `GET` | `/api/applications/[id]/documents` | List documents | Owner / Officer |
+| `POST` | `/api/applications/[id]/documents` | Attach document | Applicant |
+
+### Certificates & Verification
+
+| Method | Route | Description | Role |
+|---|---|---|---|
+| `POST` | `/api/certificates/[id]` | Generate certificate on approval | System |
+| `GET` | `/api/certificates/[id]` | Download certificate PDF | Owner |
+| `GET` | `/api/certificates/verify/[token]` | Verify QR token | `[Public]` |
+
+### Uploads
+
+| Method | Route | Description |
+|---|---|---|
+| `POST` | `/api/uploads/presigned` | Get S3 presigned upload URL |
+
+---
+
+## Package Stack
+
+### Prerequisites
+
+- Node.js **v22+**
+- PostgreSQL **16+**
+- AWS account with S3 bucket
+- [Resend](https://resend.com) account for email
+
+### Frontend Packages
+
+```bash
+# Core
+npm install next@15 react@19 react-dom@19 typescript@5.8
+
+# Styling
+npm install tailwindcss@4 @tailwindcss/typography @tailwindcss/forms
+npm install class-variance-authority clsx tailwind-merge
+
+# UI Components
+npm install @radix-ui/react-dialog @radix-ui/react-dropdown-menu
+npm install @radix-ui/react-select @radix-ui/react-tabs
+npm install @radix-ui/react-tooltip @radix-ui/react-progress
+npm install lucide-react
+
+# Animation
+npm install motion@12
+
+# Forms
+npm install react-hook-form@8 @hookform/resolvers@3
+
+# State management
+npm install zustand@5
+
+# Data tables
+npm install @tanstack/react-table@8
+
+# Charts
+npm install recharts@2.14
+
+# QR codes
+npm install qrcode@1.5 @types/qrcode
+
+# Drag and drop
+npm install @dnd-kit/core @dnd-kit/sortable
+
+# Date handling
+npm install date-fns@4
+```
+
+### Backend Packages
+
+```bash
+# Auth
+npm install next-auth@5 @auth/prisma-adapter
+
+# Database
+npm install prisma@6 @prisma/client@6
+
+# Validation
+npm install zod@3
+
+# File upload (AWS S3)
+npm install @aws-sdk/client-s3@3 @aws-sdk/s3-request-presigner@3
+
+# PDF generation
+npm install @react-pdf/renderer@4
+
+# Email
+npm install resend@4
+
+# Security
+npm install jose@5 bcryptjs@3 @types/bcryptjs
+
+# Dev dependencies
+npm install -D @types/node @types/react @types/react-dom
+npm install -D eslint eslint-config-next prettier
+npm install -D tsx nodemon
+```
+
+---
+
+## Environment Variables
+
+Copy `.env.example` to `.env.local` and fill in your values. See the internal setup guide for the full configuration reference. **Never commit `.env.local` to version control.**
+
+```bash
+cp .env.example .env.local
+```
+
+---
+
+## Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/frms-fda-ghana.git
+cd frms-fda-ghana
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Set up environment variables
+
+```bash
+cp .env.example .env.local
+# Fill in .env.local with your actual credentials
+```
+
+### 4. Set up the database
+
+```bash
+npx prisma migrate dev --name init
+npx prisma db seed
+```
+
+### 5. Run the development server
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+---
+
+## Deployment
+
+### Vercel (Recommended)
+
+```bash
+npm install -g vercel
+vercel
+```
+
+Set all environment variables in the Vercel dashboard under **Project → Settings → Environment Variables**.
+
+### Docker (Self-hosted)
+
+A `Dockerfile` and `docker-compose.yml` are included in the repository for self-hosted or government server deployments. Refer to the internal deployment guide for production configuration.
+
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/your-feature-name`
+3. Commit with clear messages: `git commit -m "feat: add SLA clock-stop logic"`
+4. Push to your fork and open a Pull Request
+
+**Commit convention:**
+- `feat:` — new feature
+- `fix:` — bug fix
+- `refactor:` — code change with no functional difference
+- `docs:` — documentation only
+- `chore:` — build process, dependencies
+
+---
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
+---
+
+<div align="center">
+Built for the Food and Drugs Authority of Ghana<br>
+Advancing regulatory technology for public health protection
+</div>
