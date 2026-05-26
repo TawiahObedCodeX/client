@@ -1,5 +1,6 @@
 // prisma/seed.ts - Database Seeding Script
-// Creates initial data for development and testing
+// Working configuration for Prisma 7.8.0
+// Version: 2026.1.0
 
 import { PrismaClient } from '@prisma/client'
 import { hashPassword } from '../lib/password'
@@ -10,23 +11,18 @@ async function main() {
   console.log('🌱 Starting database seed...')
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
 
-  // Clean existing data (in correct order to respect foreign keys)
+  console.log('🧹 Cleaning existing data...')
   await prisma.auditLog.deleteMany()
   await prisma.session.deleteMany()
   await prisma.application.deleteMany()
   await prisma.passwordResetToken.deleteMany()
   await prisma.user.deleteMany()
+  console.log('✅ Data cleaned')
 
-  console.log('🧹 Cleaned existing data')
-
-  // ======================
-  // Create Demo Users
-  // ======================
   console.log('\n📝 Creating users...')
 
   const demoPassword = await hashPassword('password123')
   
-  // Demo Applicant
   const applicant = await prisma.user.create({
     data: {
       fullName: 'Tawiah O.',
@@ -40,7 +36,6 @@ async function main() {
   })
   console.log(`✅ Applicant created: ${applicant.email}`)
 
-  // Demo Reviewer
   const reviewer = await prisma.user.create({
     data: {
       fullName: 'Abena Mensah',
@@ -54,7 +49,6 @@ async function main() {
   })
   console.log(`✅ Reviewer created: ${reviewer.email}`)
 
-  // Demo Admin
   const admin = await prisma.user.create({
     data: {
       fullName: 'Kwame Asante',
@@ -68,7 +62,6 @@ async function main() {
   })
   console.log(`✅ Admin created: ${admin.email}`)
 
-  // Test users with different statuses
   const inactiveUser = await prisma.user.create({
     data: {
       fullName: 'Inactive User',
@@ -82,48 +75,45 @@ async function main() {
   })
   console.log(`⚠️  Inactive user created: ${inactiveUser.email}`)
 
-  // ======================
-  // Create Demo Applications
-  // ======================
   console.log('\n📋 Creating applications...')
 
   const applications = [
     {
       applicationId: 'FDA-2026-001',
       productName: 'Paracetamol Tablets 500mg',
-      category: 'PHARMACEUTICALS',
-      status: 'UNDER_REVIEW',
+      category: 'PHARMACEUTICALS' as const,
+      status: 'UNDER_REVIEW' as const,
       submittedDate: new Date('2026-03-15'),
       userId: applicant.id,
     },
     {
       applicationId: 'FDA-2026-002',
       productName: 'Shea Butter Moisturizing Cream',
-      category: 'COSMETICS',
-      status: 'APPROVED',
+      category: 'COSMETICS' as const,
+      status: 'APPROVED' as const,
       submittedDate: new Date('2026-02-28'),
       userId: applicant.id,
     },
     {
       applicationId: 'FDA-2026-003',
       productName: 'Fortified Breakfast Cereal',
-      category: 'FOOD_PRODUCTS',
-      status: 'PENDING_PAYMENT',
+      category: 'FOOD_PRODUCTS' as const,
+      status: 'PENDING_PAYMENT' as const,
       submittedDate: new Date('2026-03-10'),
       userId: applicant.id,
     },
     {
       applicationId: 'FDA-2026-004',
       productName: 'Digital Thermometer',
-      category: 'MEDICAL_DEVICES',
-      status: 'DRAFT',
+      category: 'MEDICAL_DEVICES' as const,
+      status: 'DRAFT' as const,
       userId: applicant.id,
     },
     {
       applicationId: 'FDA-2026-005',
       productName: 'Herbal Immune Booster',
-      category: 'HERBAL_PRODUCTS',
-      status: 'SUBMITTED',
+      category: 'HERBAL_PRODUCTS' as const,
+      status: 'SUBMITTED' as const,
       submittedDate: new Date('2026-04-01'),
       userId: applicant.id,
     },
@@ -134,9 +124,6 @@ async function main() {
     console.log(`✅ Application created: ${app.applicationId} - ${app.productName}`)
   }
 
-  // ======================
-  // Create Audit Logs
-  // ======================
   console.log('\n📊 Creating audit logs...')
 
   await prisma.auditLog.create({
@@ -165,9 +152,6 @@ async function main() {
     },
   })
 
-  // ======================
-  // Summary
-  // ======================
   console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
   console.log('✅ SEED COMPLETED SUCCESSFULLY')
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
@@ -183,6 +167,7 @@ async function main() {
 main()
   .then(async () => {
     await prisma.$disconnect()
+    process.exit(0)
   })
   .catch(async (e) => {
     console.error('❌ Seed error:', e)

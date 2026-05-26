@@ -275,7 +275,7 @@ export default function NewRegistrationPage() {
 
   // Handle manufacturer info change
   const handleManufacturerChange = (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({

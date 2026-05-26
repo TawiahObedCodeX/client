@@ -12,9 +12,12 @@ const nextConfig = {
     APP_VERSION: '1.0.0',
   },
   
-  // Image domains (if using external images)
+  // Image remote patterns (if using external images)
   images: {
-    domains: ['github.com', 'avatars.githubusercontent.com'],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'github.com' },
+      { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
+    ],
   },
   
   // Headers for security

@@ -1,5 +1,6 @@
 // Prisma Schema for FDA Ghana FIRMS
 // Database: PostgreSQL
+// Prisma Version: 7.8.0
 
 generator client {
   provider = "prisma-client-js"
@@ -8,7 +9,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // URL is configured in prisma.config.ts
 }
 
 // Users table
@@ -31,7 +32,6 @@ model User {
   @@map("users")
 }
 
-// Application status enum
 enum ApplicationStatus {
   DRAFT
   SUBMITTED
@@ -44,7 +44,6 @@ enum ApplicationStatus {
   CANCELLED
 }
 
-// User roles enum
 enum Role {
   APPLICANT
   REVIEWER
@@ -52,7 +51,6 @@ enum Role {
   SUPER_ADMIN
 }
 
-// Product categories enum
 enum ProductCategory {
   FOOD_PRODUCTS
   PHARMACEUTICALS
@@ -64,7 +62,6 @@ enum ProductCategory {
   VETERINARY_PRODUCTS
 }
 
-// Applications table
 model Application {
   id              String            @id @default(cuid())
   applicationId   String            @unique
@@ -84,7 +81,6 @@ model Application {
   @@map("applications")
 }
 
-// Sessions table for tracking user sessions
 model Session {
   id           String   @id @default(cuid())
   userId       String
@@ -100,7 +96,6 @@ model Session {
   @@map("sessions")
 }
 
-// Audit logs for tracking important actions
 model AuditLog {
   id          String   @id @default(cuid())
   userId      String?
@@ -118,7 +113,6 @@ model AuditLog {
   @@map("audit_logs")
 }
 
-// Password reset tokens
 model PasswordResetToken {
   id        String   @id @default(cuid())
   email     String

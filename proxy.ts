@@ -13,6 +13,7 @@ const PUBLIC_ROUTES = [
   '/forgot-password',
   '/reset-password',
   '/verify-email',
+  '/verify',
 ]
 
 // Auth routes (redirect to dashboard if already authenticated)

@@ -7,7 +7,9 @@ import { hashPassword } from '@/lib/password'
 import { createToken, setAuthCookie, createSession, createAuditLog } from '@/lib/auth'
 import { registerSchema } from '@/lib/validations'
 import { Prisma } from '@prisma/client'
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
+// ❌ REMOVE THIS LINE - it's incorrect
+// import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
+// ✅ The correct way is to use Prisma.PrismaClientKnownRequestError (already imported above)
 
 export async function POST(request: NextRequest) {
   try {
@@ -48,7 +50,7 @@ export async function POST(request: NextRequest) {
     const hashedPassword = await hashPassword(password)
 
     // Create user in transaction
-    const user = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+    const user = await prisma.$transaction(async (tx) => {
       // Create user
       const newUser = await tx.user.create({
         data: {
