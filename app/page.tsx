@@ -22,6 +22,24 @@ import Footer from "@/components/common/Footer";
 import HeroCarousel from "@/components/verification/HeroCarousel";
 import { PremiumDashboardSkeleton } from "@/components/common/Loader";
 
+// Animation settings for scroll triggers
+const SCROLL_CONTAINER_VARIANTS = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.1 }
+  }
+};
+
+const SCROLL_ITEM_VARIANTS = {
+  hidden: { opacity: 0, y: 35 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] } 
+  }
+};
+
 export default function PublicLandingPage() {
   const [verificationToken, setVerificationToken] = useState("");
   const [isVerifyModalOpen, setIsVerifyModalOpen] = useState(false);
@@ -30,7 +48,7 @@ export default function PublicLandingPage() {
   useEffect(() => {
     const hydrationTimer = setTimeout(() => {
       setSimulateStatsLoading(false);
-    }, 1200);
+    }, 1000);
     return () => clearTimeout(hydrationTimer);
   }, []);
 
@@ -44,18 +62,25 @@ export default function PublicLandingPage() {
   return (
     <div className="w-full min-h-screen bg-[#F8FAFC] overflow-x-hidden flex flex-col justify-between selection:bg-[#C5A059]/20 selection:text-[#0B132B]">
       
-      {/* ─── SCROLL LOCKED MODULAR HEADER NAV ─── */}
+      {/* ─── SYSTEM MODULAR GLASS HEADER NAV ─── */}
       <Navbar />
 
-      {/* ─── FULL VIEWPORT HIGH-CONTRAST HERO CAROUSEL BLOCK ─── */}
+      {/* ─── HIGH-CONTRAST HERO CAROUSEL BLOCK ─── */}
       <HeroCarousel onVerifyClick={() => setIsVerifyModalOpen(true)} />
 
-      {/* ─── STATISTICS / REGISTRY SEGMENT ─── */}
-      <section id="analytical-scope" className="py-28 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
-        <div className="mb-14 space-y-2">
+      {/* ─── STATISTICS / LIVE REGISTRY SEGMENT ─── */}
+      <motion.section 
+        id="analytical-scope" 
+        className="py-28 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full scroll-mt-16"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={SCROLL_CONTAINER_VARIANTS}
+      >
+        <motion.div className="mb-14 space-y-2" variants={SCROLL_ITEM_VARIANTS}>
           <span className="font-mono text-[10px] text-[#006B43] font-bold tracking-widest block uppercase">Metric Pipelines</span>
           <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-[#0B132B] tracking-tight">Live Registry Integrity Index</h2>
-        </div>
+        </motion.div>
 
         <AnimatePresence mode="wait">
           {simulateStatsLoading ? (
@@ -65,12 +90,10 @@ export default function PublicLandingPage() {
           ) : (
             <motion.div
               key="hydrated-ui"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              variants={SCROLL_CONTAINER_VARIANTS}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
-              <div className="bg-white p-7 rounded-xl border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-6 hover:border-slate-300 transition-all">
+              <motion.div variants={SCROLL_ITEM_VARIANTS} className="bg-white p-7 rounded-xl border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-6 hover:border-slate-300 transition-all">
                 <div className="flex justify-between items-start">
                   <div className="space-y-1">
                     <p className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest">Establishments</p>
@@ -81,9 +104,9 @@ export default function PublicLandingPage() {
                   </div>
                 </div>
                 <p className="text-xs text-slate-500 leading-relaxed">Fully audited processing compounds officially registered cross-territory.</p>
-              </div>
+              </motion.div>
 
-              <div className="bg-white p-7 rounded-xl border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-6 hover:border-slate-300 transition-all">
+              <motion.div variants={SCROLL_ITEM_VARIANTS} className="bg-white p-7 rounded-xl border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-6 hover:border-slate-300 transition-all">
                 <div className="flex justify-between items-start">
                   <div className="space-y-1">
                     <p className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest">SLA Compliance</p>
@@ -94,9 +117,9 @@ export default function PublicLandingPage() {
                   </div>
                 </div>
                 <p className="text-xs text-slate-500 leading-relaxed">System-enforced processing responses operating inside statutory limits.</p>
-              </div>
+              </motion.div>
 
-              <div className="bg-white p-7 rounded-xl border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-6 hover:border-slate-300 transition-all">
+              <motion.div variants={SCROLL_ITEM_VARIANTS} className="bg-white p-7 rounded-xl border border-slate-200/80 shadow-xs flex flex-col justify-between space-y-6 hover:border-slate-300 transition-all">
                 <div className="flex justify-between items-start">
                   <div className="space-y-1">
                     <p className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-widest">Global Channels</p>
@@ -107,22 +130,29 @@ export default function PublicLandingPage() {
                   </div>
                 </div>
                 <p className="text-xs text-slate-500 leading-relaxed">Foreign exporter manufacturing tracks linked into the core ledger network.</p>
-              </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
-      </section>
+      </motion.section>
 
-      {/* ─── SYSTEM ARCHITECTURE DEEP DIVE BENTO ─── */}
-      <section id="infrastructure" className="bg-white border-t border-slate-200 py-24 w-full">
+      {/* ─── SYSTEM ARCHITECTURE Spec BENTO ─── */}
+      <motion.section 
+        id="infrastructure" 
+        className="bg-white border-t border-slate-200 py-24 w-full scroll-mt-16"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={SCROLL_CONTAINER_VARIANTS}
+      >
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
-          <div className="mb-14 space-y-2">
+          <motion.div className="mb-14 space-y-2" variants={SCROLL_ITEM_VARIANTS}>
             <span className="font-mono text-[10px] text-[#C5A059] font-bold tracking-widest block uppercase">Infrastructure Spec</span>
             <h2 className="text-2xl font-heading font-extrabold text-[#0B132B] tracking-tight">Core Architectural Engineering Rails</h2>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            <div className="space-y-3.5">
+            <motion.div className="space-y-3.5" variants={SCROLL_ITEM_VARIANTS}>
               <div className="w-10 h-10 rounded bg-slate-50 border border-slate-200 flex items-center justify-center">
                 <Workflow className="w-4.5 h-4.5 text-[#0B132B]" />
               </div>
@@ -130,9 +160,9 @@ export default function PublicLandingPage() {
               <p className="text-xs text-slate-600 leading-relaxed">
                 Dynamically segments assessment routing using specific analytical criteria parsed right during file injection steps.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="space-y-3.5">
+            <motion.div className="space-y-3.5" variants={SCROLL_ITEM_VARIANTS}>
               <div className="w-10 h-10 rounded bg-slate-50 border border-slate-200 flex items-center justify-center">
                 <Cpu className="w-4.5 h-4.5 text-[#006B43]" />
               </div>
@@ -140,9 +170,9 @@ export default function PublicLandingPage() {
               <p className="text-xs text-slate-600 leading-relaxed">
                 Timers automatically halt whenever informational requests route out to compliance applicants, logging transparent data audits.
               </p>
-            </div>
+            </motion.div>
 
-            <div className="space-y-3.5">
+            <motion.div className="space-y-3.5" variants={SCROLL_ITEM_VARIANTS}>
               <div className="w-10 h-10 rounded bg-slate-50 border border-slate-200 flex items-center justify-center">
                 <Fingerprint className="w-4.5 h-4.5 text-[#C5A059]" />
               </div>
@@ -150,48 +180,55 @@ export default function PublicLandingPage() {
               <p className="text-xs text-slate-600 leading-relaxed">
                 Approved system operations compile signed cryptographic hash references mapped to searchable registration lookup indices.
               </p>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* ─── FUNCTIONAL OPERATIONAL PORTALS ─── */}
-      <section id="operational-channels" className="border-t border-slate-200/60 py-24 w-full bg-slate-50">
+      {/* ─── OPERATIONAL SUBSYSTEM VECTORS ─── */}
+      <motion.section 
+        id="operational-channels" 
+        className="border-t border-slate-200/60 py-24 w-full bg-slate-50 scroll-mt-16"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={SCROLL_CONTAINER_VARIANTS}
+      >
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
-          <div className="mb-14 space-y-2">
+          <motion.div className="mb-14 space-y-2" variants={SCROLL_ITEM_VARIANTS}>
             <span className="font-mono text-[10px] text-[#006B43] font-bold tracking-widest block uppercase">Execution Portals</span>
             <h2 className="text-2xl font-heading font-extrabold text-[#0B132B] tracking-tight">Functional Operational Subsystems</h2>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="p-6 bg-white rounded-xl border border-slate-200/60 shadow-xs space-y-4">
+            <motion.div variants={SCROLL_ITEM_VARIANTS} className="p-6 bg-white rounded-xl border border-slate-200/60 shadow-xs space-y-4">
               <div className="p-2.5 bg-amber-500/5 border border-amber-500/10 rounded w-fit">
                 <ClipboardCheck className="w-5 h-5 text-[#C5A059]" />
               </div>
               <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-[#0B132B]">E-Filing Portal</h5>
               <p className="text-xs text-slate-500 leading-relaxed">Unified filing workspace for tracking dossiers, processing digital import-export receipts, and verifying facility conditions.</p>
-            </div>
+            </motion.div>
 
-            <div className="p-6 bg-white rounded-xl border border-slate-200/60 shadow-xs space-y-4">
+            <motion.div variants={SCROLL_ITEM_VARIANTS} className="p-6 bg-white rounded-xl border border-slate-200/60 shadow-xs space-y-4">
               <div className="p-2.5 bg-emerald-500/5 border border-emerald-500/10 rounded w-fit">
                 <Layers className="w-5 h-5 text-[#006B43]" />
               </div>
               <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-[#0B132B]">Internal Evaluation</h5>
               <p className="text-xs text-slate-500 leading-relaxed">Algorithmic workflow distributions grouping incoming queries to specialized lab teams depending on chemical structure matrices.</p>
-            </div>
+            </motion.div>
 
-            <div className="p-6 bg-white rounded-xl border border-slate-200/60 shadow-xs space-y-4">
+            <motion.div variants={SCROLL_ITEM_VARIANTS} className="p-6 bg-white rounded-xl border border-slate-200/60 shadow-xs space-y-4">
               <div className="p-2.5 bg-red-500/5 border border-red-500/10 rounded w-fit">
                 <ShieldAlert className="w-5 h-5 text-red-600" />
               </div>
               <h5 className="text-xs font-mono font-bold uppercase tracking-wider text-[#0B132B]">Risk Mitigation</h5>
               <p className="text-xs text-slate-500 leading-relaxed">Post-market safety telemetry triggers that flag suspicious product lines dynamically based on public ledger inconsistencies.</p>
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      {/* ─── PUBLIC LEDGER DIALOG CANVAS ─── */}
+      {/* ─── PUBLIC LEDGER DIALOG OVERLAY CANVAS ─── */}
       <AnimatePresence>
         {isVerifyModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -204,10 +241,10 @@ export default function PublicLandingPage() {
             />
             
             <motion.div 
-              initial={{ scale: 0.98, opacity: 0, y: 6 }}
+              initial={{ scale: 0.95, opacity: 0, y: 15 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.98, opacity: 0, y: 6 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ scale: 0.95, opacity: 0, y: 15 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="w-full max-w-sm bg-white rounded-xl p-6 shadow-2xl border border-slate-200 relative z-10 space-y-4"
             >
               <div className="flex justify-between items-center">
@@ -248,7 +285,7 @@ export default function PublicLandingPage() {
         )}
       </AnimatePresence>
 
-      {/* ─── SCROLL LOCKED MODULAR FOOTER ─── */}
+      {/* ─── SYSTEM MODULAR FOOTER ─── */}
       <Footer />
     </div>
   );
