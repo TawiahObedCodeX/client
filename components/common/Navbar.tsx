@@ -32,7 +32,7 @@ export default function Navbar() {
         
         {/* Brand System Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="p-2.5 rounded bg-gradient-to-br from-[#C5A059] to-[#E5C483] text-[#0B132B] shadow-lg transition-transform group-hover:scale-105">
+          <div className="p-2.5 rounded bg-linear-to-br from-[#C5A059] to-[#E5C483] text-[#0B132B] shadow-lg transition-transform group-hover:scale-105">
             <ShieldCheck className="w-6 h-6" />
           </div>
           <div className="flex flex-col">
@@ -68,7 +68,7 @@ export default function Navbar() {
           </Link>
           <Link
             href="/register"
-            className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#C5A059] to-[#E5C483] text-[#0B132B] text-base font-semibold hover:brightness-110 active:scale-98 transition-all flex items-center gap-2"
+            className="px-6 py-3 rounded-xl bg-linear-to-r from-[#C5A059] to-[#E5C483] text-[#0B132B] text-base font-semibold hover:brightness-110 active:scale-98 transition-all flex items-center gap-2"
           >
             E-Filing Portal
             <ArrowRight className="w-5 h-5" />
@@ -129,7 +129,7 @@ export default function Navbar() {
               <Link
                 onClick={() => setIsMobileMenuOpen(false)}
                 href="/register"
-                className="w-full py-4 text-center rounded-2xl bg-gradient-to-r from-[#C5A059] to-[#E5C483] text-[#0B132B] font-semibold"
+                className="w-full py-4 text-center rounded-2xl bg-linear-to-r from-[#C5A059] to-[#E5C483] text-[#0B132B] font-semibold"
               >
                 Launch New Filing
               </Link>
