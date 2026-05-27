@@ -11,7 +11,7 @@ export default function Footer() {
     <footer className="bg-[#020617] text-slate-400 border-t border-slate-900 pt-20 pb-12 w-full relative overflow-hidden">
       
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(#ffffff02_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(#ffffff02_1px,transparent_1px)] bg-size-[24px_24px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full relative z-10 grid grid-cols-1 lg:grid-cols-4 gap-12 lg:gap-8 pb-16">
         
