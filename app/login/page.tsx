@@ -41,7 +41,7 @@ export default function LoginPage() {
       <section className="w-full lg:w-[45%] bg-white px-6 sm:px-12 lg:px-16 py-10 lg:py-12 flex flex-col justify-between min-h-screen lg:overflow-hidden">
         
         <Link href="/" className="flex items-center gap-3 group w-fit">
-          <div className="p-2.5 rounded bg-gradient-to-br from-[#0B132B] to-[#162347] text-[#E5C483]">
+          <div className="p-2.5 rounded bg-linear-to-br from-[#0B132B] to-[#162347] text-[#E5C483]">
             <ShieldCheck className="w-6 h-6" />
           </div>
           <div>
@@ -132,7 +132,7 @@ export default function LoginPage() {
 
       {/* RIGHT PANEL */}
       <section className="hidden lg:flex lg:w-[55%] bg-[#020617] relative flex-col justify-end p-12 overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-[size:50px_50px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-size-[50px_50px]" />
         
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
