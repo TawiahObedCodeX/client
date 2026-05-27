@@ -3,13 +3,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
-  ChevronLeft, 
-  ChevronRight, 
   QrCode, 
   FileCheck2, 
   ArrowRight,
   Utensils,
-  Pill, // Fixes: Export Pills doesn't exist in target module
+  Pill,
   Sparkles,
   Stethoscope,
   Apple,
@@ -45,7 +43,7 @@ const HERO_SLIDES: SlideData[] = [
     title: "Rigorous Therapeutic Validation Frameworks",
     subtitle: "Rigorous clinical trials management checking chemical purity benchmarks, therapeutic validation, and medical asset verification logs.",
     imgUrl: "https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&q=80&w=2200",
-    Icon: Pill // Updated reference from Pills to Pill
+    Icon: Pill
   },
   {
     id: 3,
@@ -136,16 +134,14 @@ export default function HeroCarousel({ onVerifyClick }: HeroCarouselProps) {
   };
 
   const currentSlide = HERO_SLIDES[index];
-  
-  // Guard clause to protect against unmapped execution array states
   if (!currentSlide) return <div className="w-full h-screen bg-[#020617]" />;
 
   const CurrentIcon = currentSlide.Icon;
 
   return (
-    <div className="relative w-full h-screen min-h-[750px] bg-[#020617] overflow-hidden">
+    <div className="relative w-full h-screen min-h-[680px] bg-[#020617] overflow-hidden">
       
-      {/* ─── CLEAR BACKDROP PHOTOGRAPHY ─── */}
+      {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <motion.img
@@ -160,77 +156,83 @@ export default function HeroCarousel({ onVerifyClick }: HeroCarouselProps) {
           />
         </AnimatePresence>
         
-        {/* Anti-Washout Linear Edge Shading Layers */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#020617]/95 via-[#020617]/70 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-[#020617]/50" />
       </div>
 
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff02_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none z-10" />
 
-      {/* ─── TEXT BLOCK LAYOUT FRAME ─── */}
-      <div className="absolute inset-0 z-20 flex flex-col justify-center px-6 sm:px-12 lg:px-24 max-w-5xl">
+      {/* Main Content */}
+      <div className="absolute inset-0 z-20 flex flex-col justify-center px-6 sm:px-8 lg:px-16 max-w-5xl">
         <AnimatePresence mode="wait">
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="space-y-6"
           >
-            <div className="inline-flex items-center gap-3 px-3.5 py-2 rounded border border-white/10 bg-[#0B132B]/85 backdrop-blur-md shadow-2xl">
-              <div className="p-1 rounded bg-[#C5A059]/10 text-[#C5A059]">
-                <CurrentIcon className="w-4 h-4" />
+            {/* Category Tag */}
+            <div className="inline-flex items-center gap-3 px-4 py-2.5 rounded-2xl border border-white/10 bg-[#0B132B]/90 backdrop-blur-md">
+              <div className="p-2 rounded-xl bg-[#C5A059]/10 text-[#C5A059]">
+                <CurrentIcon className="w-6 h-6" />
               </div>
-              <div className="flex items-center gap-2 font-mono text-[10px] tracking-widest font-bold">
-                <span className="text-white/40">{currentSlide.category} :</span>
-                <span className="text-[#C5A059] uppercase">{currentSlide.tag}</span>
+              <div className="font-mono">
+                <span className="text-white/70 text-sm">{currentSlide.category}</span>
+                <span className="block text-[#C5A059] text-base font-bold uppercase tracking-widest">
+                  {currentSlide.tag}
+                </span>
               </div>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-heading font-extrabold text-white leading-[1.08] tracking-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
+            {/* Title - Moderately Large */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-heading font-extrabold text-white leading-tight tracking-tighter drop-shadow-2xl">
               {currentSlide.title.split(" ").map((word, idx) => {
                 const highlights = ["Lifecycles", "Oversight", "Safety", "Verification", "Evaluation", "Auditing", "Consumables"];
-                const match = highlights.some(h => word.includes(h));
+                const isHighlighted = highlights.some(h => word.includes(h));
                 return (
-                  <span key={idx} className={match ? "text-transparent bg-clip-text bg-gradient-to-r from-[#C5A059] to-[#E5C483]" : ""}>
+                  <span 
+                    key={idx} 
+                    className={isHighlighted ? "text-transparent bg-clip-text bg-gradient-to-r from-[#C5A059] to-[#E5C483]" : ""}
+                  >
                     {word}{" "}
                   </span>
                 );
               })}
             </h1>
 
-            <p className="text-slate-200 text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl font-normal drop-shadow-[0_2px_10px_rgba(0,0,0,1)]">
+            {/* Subtitle - Balanced Size */}
+            <p className="text-base sm:text-lg md:text-xl text-slate-200 max-w-3xl leading-relaxed font-light drop-shadow-xl">
               {currentSlide.subtitle}
             </p>
           </motion.div>
         </AnimatePresence>
 
-        {/* ─── INTERACTIVE BUTTON ARRAYS ─── */}
-        <div className="mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+        {/* Action Buttons - Slightly Smaller */}
+        <div className="mt-10 flex flex-col sm:flex-row gap-4">
           <button 
             onClick={onVerifyClick}
-            className="group px-7 py-4 rounded bg-gradient-to-r from-[#C5A059] to-[#E5C483] text-[#0B132B] text-xs font-mono uppercase tracking-widest font-bold shadow-[0_8px_32px_rgba(197,160,89,0.25)] hover:brightness-110 active:scale-[0.99] transition-all flex items-center justify-center gap-3 cursor-pointer"
+            className="group px-7 py-4 rounded-2xl bg-gradient-to-r from-[#C5A059] to-[#E5C483] text-[#0B132B] text-base font-semibold shadow-xl hover:brightness-110 active:scale-[0.985] transition-all flex items-center justify-center gap-3"
           >
-            <QrCode className="w-4.5 h-4.5" /> 
-            <span>Scan Public Ledger</span>
+            <QrCode className="w-5 h-5" /> 
+            Scan Public Ledger
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </button>
 
           <Link 
             href="/register" 
-            className="px-7 py-4 rounded border border-white/15 bg-[#0B132B]/85 text-white text-xs font-mono uppercase tracking-widest backdrop-blur-md shadow-2xl hover:bg-[#0B132B] hover:border-white/35 transition-all text-center flex items-center justify-center gap-2.5"
+            className="px-7 py-4 rounded-2xl border border-white/20 bg-[#0B132B]/80 text-white text-base font-semibold backdrop-blur-md hover:bg-white/10 hover:border-white/40 transition-all flex items-center justify-center gap-3"
           >
-            <FileCheck2 className="w-4.5 h-4.5 text-[#C5A059]" /> 
-            <span>Launch New Filing</span>
+            <FileCheck2 className="w-5 h-5 text-[#C5A059]" /> 
+            Launch New Filing
           </Link>
         </div>
       </div>
 
-      {/* ─── BOTTOM CONTROLS & TRACK SEGMENTS ─── */}
-      <div className="absolute z-30 left-6 sm:left-12 lg:left-24 right-6 sm:right-12 lg:right-24 bottom-10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#020617]/60 backdrop-blur-md p-3 rounded-lg border border-white/5">
-        
-        <div className="flex flex-wrap items-center gap-2">
+      {/* Bottom Indicators */}
+      {/* <div className="absolute z-30 left-6 sm:left-8 lg:left-16 right-6 sm:right-8 lg:right-16 bottom-8 flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#020617]/70 backdrop-blur-lg p-3 rounded-2xl border border-white/10">
+        <div className="flex flex-wrap gap-2">
           {HERO_SLIDES.map((slide, dotIdx) => {
             const DotIcon = slide.Icon;
             const isActive = dotIdx === index;
@@ -238,15 +240,19 @@ export default function HeroCarousel({ onVerifyClick }: HeroCarouselProps) {
               <button
                 key={dotIdx}
                 onClick={() => adjustSlide(dotIdx - index)}
-                className={`relative h-8 rounded px-3 flex items-center gap-2 transition-all cursor-pointer text-[9px] font-mono font-bold uppercase tracking-wider ${
-                  isActive ? "bg-white/10 text-[#C5A059] border border-white/15" : "bg-transparent text-slate-400 hover:text-white"
+                className={`relative h-10 rounded-xl px-4 flex items-center gap-2.5 transition-all cursor-pointer text-sm font-medium uppercase tracking-wider ${
+                  isActive 
+                    ? "bg-white/10 text-[#C5A059] border border-white/30" 
+                    : "bg-transparent text-slate-400 hover:text-white hover:bg-white/5"
                 }`}
               >
-                <DotIcon className="w-3.5 h-3.5" />
-                <span className={isActive ? "inline" : "hidden md:inline"}>{slide.category}</span>
+                <DotIcon className="w-4 h-4" />
+                <span className={isActive ? "block" : "hidden sm:block"}>
+                  {slide.category}
+                </span>
                 {isActive && (
                   <motion.div 
-                    className="absolute bottom-0 left-0 h-[2px] bg-[#C5A059]" 
+                    className="absolute bottom-0 left-0 h-0.5 bg-[#C5A059] rounded-full" 
                     style={{ width: `${progress}%` }}
                   />
                 )}
@@ -254,23 +260,7 @@ export default function HeroCarousel({ onVerifyClick }: HeroCarouselProps) {
             );
           })}
         </div>
-
-        <div className="flex items-center gap-1.5 border-t sm:border-t-0 sm:border-l border-white/10 pt-2 sm:pt-0 sm:pl-4 w-full sm:w-auto justify-end">
-          <button
-            onClick={() => adjustSlide(-1)}
-            className="w-9 h-9 rounded border border-white/10 bg-[#0B132B]/90 text-white hover:bg-[#C5A059] hover:text-[#0B132B] hover:border-[#C5A059] flex items-center justify-center transition-all cursor-pointer shadow-xl"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <button
-            onClick={() => adjustSlide(1)}
-            className="w-9 h-9 rounded border border-white/10 bg-[#0B132B]/90 text-white hover:bg-[#C5A059] hover:text-[#0B132B] hover:border-[#C5A059] flex items-center justify-center transition-all cursor-pointer shadow-xl"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
-
+      </div> */}
     </div>
   );
 }
