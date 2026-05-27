@@ -1,0 +1,17 @@
+// components/common/Toast.tsx (wrapper for sonner)
+"use client";
+
+import { toast, Toaster as SonnerToaster } from "sonner";
+
+export const showToast = {
+  success: (message: string, description?: string) =>
+    toast.success(message, { description }),
+  error: (message: string, description?: string) =>
+    toast.error(message, { description }),
+  warning: (message: string, description?: string) =>
+    toast.warning(message, { description }),
+  info: (message: string, description?: string) =>
+    toast.info(message, { description }),
+};
+
+export { SonnerToaster as Toaster };
