@@ -2,15 +2,19 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { ShieldCheck, FileCheck2, ArrowRight, Building2, User, Phone, CheckCircle2, ShieldAlert } from "lucide-react";
+import { ShieldCheck, FileCheck2, ArrowRight, Building2, User, CheckCircle2, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 const registerSchema = z.object({
   companyName: z.string().min(3, "Company name must be at least 3 characters"),
-  tin: z.string().min(8, "Valid TIN is required"),
+  tin: z.string()
+    .min(15, "Complete TIN is required")
+    .regex(/^GHA-\d{9}-\d{1}$/, "TIN must follow format: GHA-XXXXXXXXX-X"),
   contactPerson: z.string().min(3, "Contact person name is required"),
   phone: z.string().min(10, "Valid phone number is required"),
   sector: z.enum(["FOOD", "DRUG", "COSMETIC", "DEVICE", "CHEMICAL"]),
@@ -24,15 +28,40 @@ export default function RegisterPage() {
     register, 
     handleSubmit, 
     formState: { errors, isSubmitting },
+    setValue,
+    watch,
     reset 
   } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
-    mode: "onBlur"
+    mode: "onBlur",
+    defaultValues: {
+      phone: "+233"
+    }
   });
+
+  const tinValue = watch("tin", "");
+
+  // Smart TIN Mask Handler
+  const handleTinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.toUpperCase().replace(/[^GHA0-9-]/g, "");
+
+    if (!value.startsWith("GHA")) {
+      value = "GHA-" + value.replace(/^GHA?/, "");
+    }
+
+    const numbersOnly = value.replace(/[^0-9]/g, "");
+    let formatted = "GHA-";
+
+    formatted += numbersOnly.slice(0, 9);
+    if (numbersOnly.length > 9) {
+      formatted += "-" + numbersOnly.slice(9, 10);
+    }
+
+    setValue("tin", formatted.slice(0, 15), { shouldValidate: true });
+  };
 
   const onSubmit = async (data: RegisterForm) => {
     console.log("Submitting registration:", data);
-    // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
     alert("Registration submitted successfully!");
     reset();
@@ -86,10 +115,13 @@ export default function RegisterPage() {
                 <div className="relative">
                   <FileCheck2 className="w-5 h-5 text-slate-400 absolute left-4 top-3.5" />
                   <input
-                    {...register("tin")}
-                    disabled={isSubmitting}
+                    type="text"
+                    value={tinValue}
+                    onChange={handleTinChange}
                     placeholder="GHA-XXXXXXXXX-X"
-                    className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#C5A059] text-base font-mono"
+                    maxLength={15}
+                    disabled={isSubmitting}
+                    className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#C5A059] text-base font-mono tracking-wider"
                   />
                 </div>
                 {errors.tin && <p className="text-red-500 text-sm mt-1">{errors.tin.message}</p>}
@@ -111,17 +143,21 @@ export default function RegisterPage() {
                 {errors.contactPerson && <p className="text-red-500 text-sm mt-1">{errors.contactPerson.message}</p>}
               </div>
 
+              {/* Global Phone Input */}
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1.5">Phone Number</label>
-                <div className="relative">
-                  <Phone className="w-5 h-5 text-slate-400 absolute left-4 top-3.5" />
-                  <input
-                    {...register("phone")}
-                    disabled={isSubmitting}
-                    placeholder="+233 XX XXX XXXX"
-                    className="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#C5A059] text-base font-mono"
-                  />
-                </div>
+                <PhoneInput
+                  international
+                  countryCallingCodeEditable={false}
+                  defaultCountry="GH"
+                  value={watch("phone")}
+                  onChange={(value) => setValue("phone", value || "", { shouldValidate: true })}
+                  disabled={isSubmitting}
+                  className="react-phone-input-custom"
+                  numberInputProps={{
+                    className: "w-full pl-14 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:border-[#C5A059] text-base font-mono"
+                  }}
+                />
                 {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
               </div>
             </div>
@@ -173,7 +209,7 @@ export default function RegisterPage() {
         <p className="text-xs text-slate-400 text-center lg:text-left mt-8">&copy; 2026 FDA Ghana. All Rights Reserved.</p>
       </section>
 
-      {/* RIGHT PANEL - Unchanged Design */}
+      {/* RIGHT PANEL */}
       <section className="hidden lg:flex lg:w-[40%] bg-[#020617] relative flex-col justify-between p-12 overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-[size:40px_40px]" />
         
