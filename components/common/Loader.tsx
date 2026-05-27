@@ -9,7 +9,7 @@ export function SkeletonItem({ className = "" }: { className?: string }) {
         initial={{ x: "-100%" }}
         animate={{ x: "100%" }}
         transition={{ repeat: Infinity, duration: 1.6, ease: "linear" }}
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+        className="absolute inset-0 bg-linear-to-r from-transparent via-white/40 to-transparent"
       />
     </div>
   );

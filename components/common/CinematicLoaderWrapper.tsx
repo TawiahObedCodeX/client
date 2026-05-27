@@ -26,10 +26,10 @@ export default function CinematicLoaderWrapper() {
             y: -20,
             transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
           }}
-          className="fixed inset-0 z-[9999] bg-[#020617] flex flex-col items-center justify-center pointer-events-auto"
+          className="fixed inset-0 z-9999 bg-[#020617] flex flex-col items-center justify-center pointer-events-auto"
         >
           {/* Background Subtle Tech Grid Line Accents */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-size-[40px_40px] pointer-events-none" />
           
           <div className="flex flex-col items-center max-w-sm text-center px-6 relative z-10">
             {/* Animated Brand Pulse Frame */}
@@ -57,12 +57,12 @@ export default function CinematicLoaderWrapper() {
             </p>
 
             {/* High-End Motion Progress Line Track */}
-            <div className="w-40 h-[2px] bg-white/10 rounded-full overflow-hidden relative">
+            <div className="w-40 h-0.5 bg-white/10 rounded-full overflow-hidden relative">
               <motion.div
                 initial={{ left: "-100%" }}
                 animate={{ left: "100%" }}
                 transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-                className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-transparent via-[#C5A059] to-transparent"
+                className="absolute top-0 bottom-0 w-1/2 bg-linear-to-r from-transparent via-[#C5A059] to-transparent"
               />
             </div>
           </div>

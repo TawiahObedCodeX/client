@@ -74,7 +74,7 @@ export default function RegisterPage() {
       <section className="w-full lg:w-[60%] bg-white px-6 sm:px-12 lg:px-20 py-10 lg:py-12 flex flex-col justify-between min-h-screen lg:overflow-hidden">
         
         <Link href="/" className="flex items-center gap-3 group w-fit">
-          <div className="p-2.5 rounded bg-gradient-to-br from-[#0B132B] to-[#162347] text-[#E5C483]">
+          <div className="p-2.5 rounded bg-linear-to-br from-[#0B132B] to-[#162347] text-[#E5C483]">
             <ShieldCheck className="w-6 h-6" />
           </div>
           <div>
@@ -193,7 +193,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-4 rounded-2xl bg-gradient-to-r from-[#C5A059] to-[#E5C483] text-[#0B132B] text-base font-semibold shadow-lg hover:brightness-110 transition-all flex items-center justify-center gap-3 disabled:opacity-70"
+              className="w-full py-4 rounded-2xl bg-linear-to-r from-[#C5A059] to-[#E5C483] text-[#0B132B] text-base font-semibold shadow-lg hover:brightness-110 transition-all flex items-center justify-center gap-3 disabled:opacity-70"
             >
               {isSubmitting ? "Processing..." : "Submit Registration"}
               <ArrowRight className="w-5 h-5" />
@@ -211,7 +211,7 @@ export default function RegisterPage() {
 
       {/* RIGHT PANEL */}
       <section className="hidden lg:flex lg:w-[40%] bg-[#020617] relative flex-col justify-between p-12 overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-size-[40px_40px]" />
         
         <div className="relative z-20 space-y-3">
           <CheckCircle2 className="w-8 h-8 text-[#C5A059]" />
