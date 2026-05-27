@@ -1,12 +1,15 @@
+// app/login/page.tsx
 "use client";
 
 import React, { useState } from "react";
 import { motion } from "motion/react";
-import { ShieldCheck, ArrowRight, Lock, Mail, Server, Fingerprint, Eye, EyeOff } from "lucide-react";
+import { ShieldCheck, ArrowRight, Lock, Mail, Fingerprint, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -17,6 +20,7 @@ const loginSchema = z.object({
 type LoginForm = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   
   const { 
@@ -30,8 +34,23 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginForm) => {
     console.log("Login attempt:", data);
-    await new Promise(resolve => setTimeout(resolve, 1200));
-    alert("Login successful! (Demo)");
+    
+    // Simulate authentication
+    await new Promise(resolve => setTimeout(resolve, 1400));
+
+    toast.success("Login Successful!", {
+      description: "Welcome back to FDA Ghana RegTech Platform",
+      duration: 3000,
+      action: {
+        label: "Go to Dashboard",
+        onClick: () => router.push("/dashboard"),
+      },
+    });
+
+    // Redirect after toast shows
+    setTimeout(() => {
+      router.push("/dashboard");
+    }, 1800);
   };
 
   return (

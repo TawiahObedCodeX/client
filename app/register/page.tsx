@@ -1,3 +1,4 @@
+// app/register/page.tsx
 "use client";
 
 import React from "react";
@@ -9,6 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const registerSchema = z.object({
   companyName: z.string().min(3, "Company name must be at least 3 characters"),
@@ -24,13 +27,15 @@ const registerSchema = z.object({
 type RegisterForm = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
-  const { 
-    register, 
-    handleSubmit, 
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
     watch,
-    reset 
+    reset
   } = useForm<RegisterForm>({
     resolver: zodResolver(registerSchema),
     mode: "onBlur",
@@ -41,38 +46,49 @@ export default function RegisterPage() {
 
   const tinValue = watch("tin", "");
 
-  // Smart TIN Mask Handler
   const handleTinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value.toUpperCase().replace(/[^GHA0-9-]/g, "");
-
     if (!value.startsWith("GHA")) {
       value = "GHA-" + value.replace(/^GHA?/, "");
     }
-
     const numbersOnly = value.replace(/[^0-9]/g, "");
     let formatted = "GHA-";
-
     formatted += numbersOnly.slice(0, 9);
     if (numbersOnly.length > 9) {
       formatted += "-" + numbersOnly.slice(9, 10);
     }
-
     setValue("tin", formatted.slice(0, 15), { shouldValidate: true });
   };
 
   const onSubmit = async (data: RegisterForm) => {
     console.log("Submitting registration:", data);
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    alert("Registration submitted successfully!");
+    
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1600));
+
+    toast.success("Registration Successful!", {
+      description: "Your establishment has been registered with FDA Ghana. Welcome aboard!",
+      duration: 4000,
+      action: {
+        label: "Go to Dashboard",
+        onClick: () => router.push("/dashboard"),
+      },
+    });
+
     reset();
+
+    // Redirect after toast
+    setTimeout(() => {
+      router.push("/dashboard");
+    }, 2200);
   };
 
   return (
     <main className="w-full min-h-screen bg-white flex flex-col lg:flex-row relative overflow-hidden selection:bg-[#C5A059]/20">
-      
+     
       {/* LEFT PANEL - FORM */}
       <section className="w-full lg:w-[60%] bg-white px-6 sm:px-12 lg:px-20 py-10 lg:py-12 flex flex-col justify-between min-h-screen lg:overflow-hidden">
-        
+       
         <Link href="/" className="flex items-center gap-3 group w-fit">
           <div className="p-2.5 rounded bg-linear-to-br from-[#0B132B] to-[#162347] text-[#E5C483]">
             <ShieldCheck className="w-6 h-6" />
@@ -83,7 +99,7 @@ export default function RegisterPage() {
           </div>
         </Link>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="my-auto max-w-xl w-full space-y-8"
@@ -109,7 +125,6 @@ export default function RegisterPage() {
                 </div>
                 {errors.companyName && <p className="text-red-500 text-sm mt-1">{errors.companyName.message}</p>}
               </div>
-
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1.5">Ghana GRA TIN</label>
                 <div className="relative">
@@ -143,7 +158,6 @@ export default function RegisterPage() {
                 {errors.contactPerson && <p className="text-red-500 text-sm mt-1">{errors.contactPerson.message}</p>}
               </div>
 
-              {/* Global Phone Input */}
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1.5">Phone Number</label>
                 <PhoneInput
@@ -212,12 +226,11 @@ export default function RegisterPage() {
       {/* RIGHT PANEL */}
       <section className="hidden lg:flex lg:w-[40%] bg-[#020617] relative flex-col justify-between p-12 overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff02_1px,transparent_1px),linear-gradient(to_bottom,#ffffff01_1px,transparent_1px)] bg-size-[40px_40px]" />
-        
+       
         <div className="relative z-20 space-y-3">
           <CheckCircle2 className="w-8 h-8 text-[#C5A059]" />
           <h4 className="text-lg font-bold text-white">Automated Enforcement Sequence</h4>
         </div>
-
         <div className="relative z-20 space-y-8">
           {[1,2,3].map((i) => (
             <div key={i} className="flex gap-5">
@@ -229,7 +242,6 @@ export default function RegisterPage() {
             </div>
           ))}
         </div>
-
         <div className="relative z-20 bg-amber-500/10 border border-amber-500/20 p-5 rounded-2xl">
           <ShieldAlert className="w-6 h-6 text-amber-500 mb-3" />
           <p className="text-amber-500 text-sm font-medium">All processes follow strict statutory timelines.</p>

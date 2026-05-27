@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     "Food and Drugs Authority",
   ],
 };
+import { Toaster } from 'sonner';
 
 export default function RootLayout({
   children,
@@ -23,6 +24,8 @@ export default function RootLayout({
     <html lang="en">
       <body className="min-h-screen flex flex-col antialiased">
         {children}
+        <Toaster position="top-center" richColors closeButton />
+        
       </body>
     </html>
   );
