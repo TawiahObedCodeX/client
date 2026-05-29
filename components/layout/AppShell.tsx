@@ -4,8 +4,8 @@
 import { ReactNode } from "react";
 import { useSession } from "next-auth/react";
 import { Sidebar } from "./Sidebar";
-import { Navbar } from "./Navbar";
-import { Footer } from "./Footer";
+import  Navbar  from "@/components/common/Navbar";  // correct path
+import  Footer  from "@/components/common/Footer";   // correct path
 
 interface AppShellProps {
   children: ReactNode;

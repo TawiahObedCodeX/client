@@ -1,4 +1,4 @@
-// components/forms/MultiStepRegistration/index.tsx
+// components/forms/MultiStepRegistration/index.tsx (fixed)
 "use client";
 
 import { useState, useEffect } from "react";
@@ -17,7 +17,7 @@ import { Step5Review } from "./Step5Review";
 import { useFormPersist } from "@/hooks/useFormPersist";
 import { showToast } from "@/components/common/Toast";
 
-// Complete form schema
+// Complete form schema - all fields explicitly defined with proper defaults
 const registrationSchema = z.object({
   // Step 1
   productName: z.string().min(3, "Product name is required"),
@@ -38,7 +38,7 @@ const registrationSchema = z.object({
   importerName: z.string().optional(),
   // Step 3
   labelArtworkFile: z.any().optional(),
-  hasSideEffects: z.boolean().default(false),
+  hasSideEffects: z.boolean(),
   sideEffectsDescription: z.string().optional(),
   contraindications: z.string().optional(),
   // Step 4
@@ -46,7 +46,7 @@ const registrationSchema = z.object({
     type: z.string(),
     fileKey: z.string(),
     fileName: z.string(),
-  })).default([]),
+  })),
   // Terms
   termsAccepted: z.boolean().refine(val => val === true, "You must accept the terms"),
 });
@@ -74,8 +74,24 @@ export function MultiStepRegistration() {
       category: "FOOD",
       countryOfOrigin: "Ghana",
       hasSideEffects: false,
-      documents: [],
+      documents: [],  // explicit empty array
       termsAccepted: false,
+      productName: "",
+      brandName: "",
+      genericName: "",
+      dosageForm: "",
+      strength: "",
+      packSize: "",
+      intendedUse: "",
+      activeIngredients: "",
+      storageConditions: "",
+      shelfLife: "",
+      manufacturerName: "",
+      manufacturerAddress: "",
+      importerName: "",
+      labelArtworkFile: undefined,
+      sideEffectsDescription: "",
+      contraindications: "",
     },
   });
 
@@ -103,6 +119,7 @@ export function MultiStepRegistration() {
     } else if (currentStep === 2) {
       fieldsToValidate = ["manufacturerName", "manufacturerAddress", "countryOfOrigin"];
     } else if (currentStep === 3) {
+      // No required fields to validate in step 3
       fieldsToValidate = [];
     } else if (currentStep === 4) {
       fieldsToValidate = [];

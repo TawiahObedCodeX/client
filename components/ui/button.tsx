@@ -2,7 +2,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { forwardRef, ButtonHTMLAttributes } from "react";
-import { motion, MotionProps } from "motion/react";
+import { motion, type MotionProps } from "motion/react";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4A017] disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
@@ -38,18 +38,29 @@ export interface ButtonProps
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, motion: useMotion = false, children, ...props }, ref) => {
-    const Component = useMotion ? motion.button : "button";
-    const motionProps = useMotion ? { whileTap: { scale: 0.97 }, whileHover: { scale: 1.02 } } : {};
-    
+    if (useMotion) {
+      // Use motion.button with correct typing – motion props are separate
+      return (
+        <motion.button
+          className={cn(buttonVariants({ variant, size, className }))}
+          ref={ref}
+          whileTap={{ scale: 0.97 }}
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.2 }}
+          {...(props as any)} // Cast to avoid type conflicts with MotionProps
+        >
+          {children}
+        </motion.button>
+      );
+    }
     return (
-      <Component
+      <button
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
-        {...motionProps}
         {...props}
       >
         {children}
-      </Component>
+      </button>
     );
   }
 );

@@ -1,4 +1,4 @@
-// app/(applicant)/dashboard/page.tsx
+// app/(applicant)/dashboard/page.tsx (fixed)
 "use client";
 
 import React from "react";
@@ -15,12 +15,13 @@ const containerVariants = {
   }
 };
 
+// Fixed: Use a string for ease instead of array
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } 
+    transition: { duration: 0.6, ease: "easeOut" }  // Changed from array to string
   }
 };
 

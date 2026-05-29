@@ -1,19 +1,13 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
+import { Toaster } from "sonner";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "FRMS | Food and Drugs Authority Ghana",
-  description:
-    "Enterprise Regulatory Management System for product application tracking, submissions, and public verification.",
-  keywords: [
-    "FDA",
-    "Ghana",
-    "RegTech",
-    "Product Registration",
-    "Food and Drugs Authority",
-  ],
+  description: "Enterprise Regulatory Management System",
 };
-import { Toaster } from 'sonner';
 
 export default function RootLayout({
   children,
@@ -23,9 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col antialiased">
-        {children}
-        <Toaster position="top-center" richColors closeButton />
-        
+        <SessionProvider>
+          {children}
+          <Toaster position="top-center" richColors closeButton />
+        </SessionProvider>
       </body>
     </html>
   );

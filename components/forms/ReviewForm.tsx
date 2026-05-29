@@ -16,10 +16,11 @@ import {
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 
+// Schema without .default() to avoid optional confusion
 const reviewSchema = z.object({
   action: z.enum(["APPROVED", "REJECTED", "RETURNED_FOR_INFO", "ESCALATED"]),
   notes: z.string().min(5, "Review notes are required"),
-  isInternal: z.boolean().default(false),
+  isInternal: z.boolean(),
 });
 
 type ReviewFormData = z.infer<typeof reviewSchema>;
@@ -40,7 +41,8 @@ export function ReviewForm({ onSubmit, isSubmitting }: ReviewFormProps) {
     resolver: zodResolver(reviewSchema),
     defaultValues: {
       action: "APPROVED",
-      isInternal: false,
+      notes: "",
+      isInternal: false,     // explicit default here
     },
   });
 
@@ -94,7 +96,7 @@ export function ReviewForm({ onSubmit, isSubmitting }: ReviewFormProps) {
           {...register("notes")}
           rows={5}
           placeholder="Provide detailed reasoning for your decision..."
-          error={errors.notes?.message}
+          error={errors.notes?.message}   // now safe because Textarea handles FieldError
         />
       </div>
 
