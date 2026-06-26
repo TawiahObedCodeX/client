@@ -62,7 +62,7 @@ export default function ApplicationTrackingProfile() {
                   transition={{ delay: index * 0.1 }}
                   className="relative"
                 >
-                  <div className={`absolute -left-[29px] top-1 w-8 h-8 rounded-2xl flex items-center justify-center border-4 border-white ${item.status === "completed" ? "bg-emerald-100 text-emerald-600" : item.status === "active" ? "bg-blue-100 text-blue-600" : "bg-slate-100 text-slate-400"}`}>
+                  <div className={`absolute -left-7.25 top-1 w-8 h-8 rounded-2xl flex items-center justify-center border-4 border-white ${item.status === "completed" ? "bg-emerald-100 text-emerald-600" : item.status === "active" ? "bg-blue-100 text-blue-600" : "bg-slate-100 text-slate-400"}`}>
                     {item.status === "completed" ? <CheckCircle className="w-5 h-5" /> : <Activity className="w-5 h-5" />}
                   </div>
                   <div className="ml-2">

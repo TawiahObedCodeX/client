@@ -63,7 +63,7 @@ export default function PublicLandingPage() {
     e.preventDefault();
     if (verificationToken.trim()) {
       window.location.href = `/verify/${encodeURIComponent(verificationToken.trim())}`;
-    }
+    }   
   };
 
   const closeModal = () => {
