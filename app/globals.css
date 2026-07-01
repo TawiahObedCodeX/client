@@ -1,63 +1,206 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+/* src/app/globals.css */
 
+/* ============================================
+   FDA GHANA FRMS - GLOBAL STYLES
+   ============================================ */
+
+/* Tailwind Directives */
 @import "tailwindcss";
 
-:root {
-  --font-heading: 'Sora', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+/* Custom Theme Variables */
+@theme {
+  /* Primary Colors - Deep Authority Navy */
+  --color-primary-50: #f0f4ff;
+  --color-primary-100: #dbe4ff;
+  --color-primary-200: #bac8ff;
+  --color-primary-300: #91a7ff;
+  --color-primary-400: #748ffc;
+  --color-primary-500: #5c7cfa;
+  --color-primary-600: #4c6ef5;
+  --color-primary-700: #4263eb;
+  --color-primary-800: #1B2B4B;
+  --color-primary-900: #0A1628;
+  --color-primary-950: #060F1E;
 
-  --color-primary: #0D1B2A;
-  --color-primary-light: #1A3047;
-  --color-gold: #D4A017;
-  --color-gold-light: #F0C040;
-  --color-green: #00784A;
-  --color-green-light: #00A36C;
+  /* Gold Accent - Ghana National Pride */
+  --color-gold-50: #fffbeb;
+  --color-gold-100: #fef3c7;
+  --color-gold-200: #fde68a;
+  --color-gold-300: #fcd34d;
+  --color-gold-400: #F5D547;
+  --color-gold-500: #C8960C;
+  --color-gold-600: #b45309;
+  --color-gold-700: #92400e;
+  --color-gold-800: #78350f;
+  --color-gold-900: #451a03;
 
-  --color-success: #059669;
-  --color-warning: #D97706;
-  --color-error: #DC2626;
-  --color-info: #0369A1;
+  /* Health Green */
+  --color-health-50: #ecfdf5;
+  --color-health-100: #d1fae5;
+  --color-health-200: #a7f3d0;
+  --color-health-300: #6ee7b7;
+  --color-health-400: #34d399;
+  --color-health-500: #10b981;
+  --color-health-600: #059669;
+  --color-health-700: #047857;
+  --color-health-800: #006B3D;
+  --color-health-900: #064e3b;
 
-  --color-surface: #F5F7FA;
-  --color-card: #FFFFFF;
-  --color-border-custom: #E2E8F0;
+  /* Surface Colors */
+  --color-surface-50: #F8FAFC;
+  --color-surface-100: #f1f5f9;
+  --color-surface-200: #e2e8f0;
+  --color-surface-300: #cbd5e1;
+  --color-surface-400: #94a3b8;
+  --color-surface-500: #64748b;
+  --color-surface-600: #475569;
+  --color-surface-700: #334155;
+  --color-surface-800: #1e293b;
+  --color-surface-900: #0f172a;
+
+  /* Font Families */
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
 }
 
+/* Global Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Smooth Scrolling */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Offset for fixed navbar */
 }
 
+/* Body Base Styles */
 body {
   font-family: var(--font-body);
-  background-color: var(--color-surface);
-  color: #0F172A;
+  background-color: var(--color-surface-50);
+  color: var(--color-surface-900);
+  line-height: 1.6;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-heading);
-  color: var(--color-primary);
-  font-weight: 700;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+::-webkit-scrollbar-track {
+  background: var(--color-surface-100);
 }
 
-.hero-text-shadow {
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3);
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary-800);
+  border-radius: 4px;
 }
 
-.gold-gradient-text {
-  background: linear-gradient(135deg, #D4A017 0%, #F0C040 100%);
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-700);
+}
+
+/* Selection Color */
+::selection {
+  background-color: var(--color-gold-400);
+  color: var(--color-primary-900);
+}
+
+/* Focus Styles for Accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-gold-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Animation Utilities */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Utility Classes */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+/* Glass Effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(10, 22, 40, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(200, 150, 12, 0.2);
+}
+
+/* Gradient Text Utility */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-gold-500), var(--color-gold-400));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card Hover Effect */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(10, 22, 40, 0.1);
 }
